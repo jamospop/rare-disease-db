@@ -36,6 +36,10 @@ class BaselineConfig:
     # frequency branches produced 31.9% guaranteed false positives. Set False to
     # reproduce the ablation.
     restrict_to_phenotypic_abnormality: bool = True
+    # Hard section allowlist. Set to (TITLE, ABSTRACT) to simulate the
+    # `abstract_only` licence tier: what could we extract from a paper whose full
+    # text we are not permitted to read? Quantifies the cost of that tier.
+    sections: tuple[Section, ...] | None = None
     # A case report names many genes but implicates one. Recall for "gold gene
     # appears somewhere in the paper" is ~97%; precision is the entire problem
     # (mean 10.9 genes mentioned per paper). So rank and keep the top few rather
@@ -74,6 +78,8 @@ class DictionaryExtractor:
         comparison for this extractor.
         """
         sentences = doc.sentences()
+        if self.cfg.sections is not None:
+            sentences = [s for s in sentences if s.section in self.cfg.sections]
         if self.cfg.patient_sections_only:
             sentences = [s for s in sentences if is_patient_section(s)]
 

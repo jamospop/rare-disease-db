@@ -21,11 +21,17 @@ What the model is actually for is the part dictionaries cannot do: deciding
 which individual a finding belongs to in a multi-individual cohort paper, and
 judging negation and hypotheticals in real clinical prose.
 
-Cost control, in order of impact:
-  1. Batch API - 50% off, and this is an offline corpus job, so latency is free.
-  2. Prompt caching on the long shared system prompt - it is identical for every
-     paper in the corpus, so it should be paid for once per cache window.
-  3. Effort, tuned per run rather than left at the default.
+Cost control, in order of MEASURED impact (129-paper dev split, claude-opus-5 list price):
+  1. Batch API - 50% off ($13.57 -> $6.78). An offline corpus job, so the up-to-24h
+     turnaround costs nothing. By far the biggest lever.
+  2. Effort, tuned per run rather than left at the default.
+  3. Prompt caching - worth only $0.34 here (2.5%). The system prompt is ~585 tokens
+     against ~770k tokens of document text, and documents are unique per call so they
+     cannot be cached. Kept because it is free and would matter if the prompt grew,
+     but it is not a design pillar; claiming otherwise was an unmeasured assumption.
+     NOTE: the minimum cacheable prefix is 512 tokens on Opus 5 but 1024 on most other
+     models, so at 585 tokens this caches on Opus 5 and would SILENTLY stop caching
+     elsewhere. Watch cache_read_input_tokens.
 
 Status: written against the current Messages API contract but NOT executed
 live - no API key was available in the environment where this was built. The

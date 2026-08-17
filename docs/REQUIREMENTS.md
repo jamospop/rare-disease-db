@@ -2,7 +2,7 @@
 
 Two sections, deliberately separated by how well evidenced they are.
 
-**§1 is grounded** — every requirement traces to a measurement in this repository, and the
+**§1 is grounded**: every requirement traces to a measurement in this repository, and the
 script that produced it is named.
 
 **§2 is not done.** The project plan calls for requirements synthesised from published
@@ -22,7 +22,7 @@ the gap.
 absent-phenotype F1 of 0.10 is the largest known quality gap (ERROR_LEDGER E2).
 
 ### R2. Segment individuals, because the literature is cohort-shaped
-10,377 gold cases come from 1,733 papers — median 2 individuals per paper, maximum 462. Only
+10,377 gold cases come from 1,733 papers - median 2 individuals per paper, maximum 462. Only
 666 papers describe exactly one individual. *Source: gold-set grouping,
 `rdcd/eval/goldsets.py`.*
 → Document-level extraction is structurally unable to serve the domain. Measured cost of not
@@ -95,25 +95,25 @@ Scoring against a live API means numbers change when the API's content changes.
 
 The plan's §1 replaces clinician interviews with published evidence of need. That
 substitution is sound, and the synthesis has **not** been performed. What follows is the
-reading list and the questions to put to it — not answers.
+reading list and the questions to put to it - not answers.
 
 ### Sources to read
-- **FindZebra** — usability and evaluation papers on rare-disease search.
-- **DeepRare** — published failure-mode analysis. The plan asserts specific error modes
+- **FindZebra**: usability and evaluation papers on rare-disease search.
+- **DeepRare**: published failure-mode analysis. The plan asserts specific error modes
   (over-weighting nonspecific symptoms, confusing similar syndromes); **verify these against
   the paper before using them to prioritise anything.** They are currently unverified claims
   in a plan, not findings.
-- **PhenoBrain** — released case sets and evaluation protocol.
-- **LIRICAL / Exomiser** — phenotype-driven prioritisation evaluation methodology; directly
+- **PhenoBrain**: released case sets and evaluation protocol.
+- **LIRICAL / Exomiser**: phenotype-driven prioritisation evaluation methodology; directly
   relevant to whether `rdcd/eval/diagnose.py` is a defensible baseline.
-- **PMC-Patients** (~167k) and **RareArena** (~70k) — existing structured case collections.
-- **RAMEDIS** — curated case data.
+- **PMC-Patients** (~167k) and **RareArena** (~70k) - existing structured case collections.
+- **RAMEDIS**: curated case data.
 - Diagnostic-odyssey surveys (e.g. Shire/EURORDIS-style) for time-to-diagnosis evidence.
 - GA4GH Phenopackets specification papers, for schema conformance rather than motivation.
 
 ### Questions the reading must answer
 1. **Does the gap this project assumes actually exist?** PMC-Patients and RareArena already
-   provide large structured case collections. The differentiator must be stated precisely —
+   provide large structured case collections. The differentiator must be stated precisely -
    candidate answer from this repo's own work: per-field provenance with verifiable offsets,
    phenopacket-native output, explicit licence tiering, and versioned releases. That claim
    needs checking against what those datasets already publish. **This is the single highest-value
@@ -130,5 +130,5 @@ reading list and the questions to put to it — not answers.
 ### Method when it is done
 Cite every requirement to a specific paper and section. Mark anything inferred rather than
 stated as inferred. Where this repository's measurements contradict the literature, report
-both — a disagreement between a published claim and a reproducible measurement is a finding
+both - a disagreement between a published claim and a reproducible measurement is a finding
 in itself.

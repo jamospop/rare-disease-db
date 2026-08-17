@@ -24,7 +24,7 @@ of arguable (D6, D7, D10).
 without evidence are dropped by `CaseRecord.enforce_provenance()`, not flagged.
 
 **Why.** It converts medical verification into reading comprehension. An auditor who
-cannot judge "is this diagnosis correct?" can still judge "does this span say this?" —
+cannot judge "is this diagnosis correct?" can still judge "does this span say this?" -
 so quality control does not require clinicians we do not have. It also gives the LLM
 extractor a structural defence against hallucination (D3).
 
@@ -44,7 +44,7 @@ wrong one, and no downstream check can detect it. A quote is falsifiable: it eit
 appears in the document or it does not. This single constraint buys hallucination
 rejection, provenance-or-null compliance, and a legible failure mode all at once.
 
-**Cost.** The grounder becomes a bottleneck — a correctly-extracted phrase that the
+**Cost.** The grounder becomes a bottleneck - a correctly-extracted phrase that the
 dictionary cannot ground is discarded (`quote_ungroundable` in the run stats). Measured
 before blaming the model.
 
@@ -70,7 +70,7 @@ recall and is systematically kinder on recall, harsher on precision.
 **Decision.** `split_of(pmid)` hashes the PMID; ~50/50. Calibration on dev, test scored
 once per reported release.
 
-**Why.** Stable as the gold set grows — a paper cannot migrate between splits when
+**Why.** Stable as the gold set grows - a paper cannot migrate between splits when
 phenopacket-store adds cases. No shuffle seed to lose. Observed dev/test agreement on the
 primary metric is 0.438 vs 0.443, so the split is not adversarial.
 
@@ -78,7 +78,7 @@ primary metric is 0.438 vs 0.443, so the split is not adversarial.
 
 ## D6. Score exact **and** ontology-aware F1; publish the primary metric by name
 
-**Decision.** Primary metric is `observed_phenotype_graded_f1` — Lin similarity over the
+**Decision.** Primary metric is `observed_phenotype_graded_f1` - Lin similarity over the
 HPO DAG, best-match on both sides. Exact-match F1 is reported alongside, never as a
 substitute.
 
@@ -107,7 +107,7 @@ deliberately unrelated prediction scores exactly 0.000
 **Decision.** 1,000-resample percentile bootstrap over cases, fixed seed.
 
 **Why.** A bare F1 invites over-reading a difference that is noise. The dev/test gap of
-0.005 is inside a CI half-width of ~0.036 — so it is nothing, and the interval says so
+0.005 is inside a CI half-width of ~0.036 - so it is nothing, and the interval says so
 without argument.
 
 ---
@@ -133,9 +133,9 @@ contain a space.
 synonyms loses one of the commonest phrases in the corpus; including single-word ones is
 where false positives live. Multi-word phrases are far less ambiguous.
 
-**What the ablation actually showed — no support.** Removing multi-word BROAD/RELATED
+**What the ablation actually showed - no support.** Removing multi-word BROAD/RELATED
 synonyms moves Track SINGLE graded F1 from 0.5581 to 0.5582: **−0.0001**. Not a small
-gain — no gain at all. It adds 1,952 phrases for nothing measurable. The decision stands
+gain - no gain at all. It adds 1,952 phrases for nothing measurable. The decision stands
 only on the qualitative argument (a corpus-wide extractor that cannot read "hearing loss"
 is deficient on its face) and could be reverted without cost. Recorded as **unsupported by
 measurement**, because an ablation that fails to confirm a choice is the reason to run it.
@@ -190,7 +190,7 @@ Cache parsed ontologies as pickles keyed on source mtime+size.
 `xref: OMIM:162200 {source="MONDO:equivalentTo"}`, and keeping the trailing modifier broke
 every OMIM lookup silently. Now a regression test
 (`tests/test_ontology.py::test_obo_modifiers_do_not_leak_into_xrefs`). The modifier turned
-out to be useful — it distinguishes exact equivalence from broader matches.
+out to be useful - it distinguishes exact equivalence from broader matches.
 
 ---
 
@@ -209,7 +209,7 @@ diagnosis assertions normalise, so the residual 1.2% is a known ceiling, not a m
 **Decision.** Every fetch goes through `rdcd/corpus/ncbi.py`, with a content-addressed
 disk cache and a 2.8 req/s limiter (9/s with `NCBI_API_KEY`).
 
-**Why.** NCBI's rate limits get honoured in one place, and — more importantly — scoring
+**Why.** NCBI's rate limits get honoured in one place, and - more importantly - scoring
 becomes reproducible. `make eval` reads the cache, so a number cannot change because NCBI
 served something different this afternoon. Fetching is a separate, explicit target.
 
@@ -233,7 +233,7 @@ dropped except unprovenanced assertions (D2).
 **Why.** A silently removed record is indistinguishable, from the outside, from one we
 never had. Severity is honest about the difference between impossible (a term present and
 absent; a child present while its parent is absent) and merely improbable (a gene not
-previously linked to the diagnosis — which is how new associations look).
+previously linked to the diagnosis - which is how new associations look).
 
 ---
 
@@ -247,15 +247,31 @@ the licence audit and independently confirmed by Retraction Watch with a reason.
 
 ---
 
-## D20. Batch API and prompt caching are load-bearing, not optimisations
+## D20. Batch API is load-bearing; prompt caching, measured, is not
 
-**Decision.** The corpus-scale path is the Batch API; the long extraction system prompt is
+**Decision.** The corpus-scale path is the Batch API. The extraction system prompt is
 byte-stable and carries a `cache_control` breakpoint.
 
-**Why.** A corpus pass is offline, so the batch turnaround costs nothing and halves the
-per-token price. The system prompt is identical for every paper, so it should be paid for
-once per cache window rather than once per document — which is why no per-paper content is
-ever interpolated into it
+**Why the Batch API matters.** A corpus pass is offline, so up-to-24h turnaround costs
+nothing and halves the per-token price. Measured on the 129-paper dev split: **$13.57
+synchronous vs $6.78 batched.** That is the single biggest cost lever.
+
+**Why caching turned out not to matter - corrected after measuring.** This decision
+originally claimed caching was load-bearing too. It is not, at this prompt size. The system
+prompt is ~585 tokens against ~770,000 tokens of document text, so caching it saves
+**$0.34 of a $13.57 run - 2.5%.** Documents are unique per call and cannot be cached, which
+is where all the input cost lives. Caching is kept because it is free to keep and would
+matter if the prompt grew (few-shot examples, a long HPO style guide), but it is an
+optimisation, not a design pillar. Claiming otherwise was an unmeasured assumption.
+
+**A real trap it left behind.** The minimum cacheable prefix is model-dependent: 512 tokens
+on Claude Opus 5, but **1024 on Opus 4.8 and most others**. At 585 tokens this prompt caches
+on Opus 5 and would **silently stop caching** on a model with a 1024 minimum - no error,
+just `cache_read_input_tokens: 0`. The runner prints cache reads for exactly this reason.
+Anyone growing or shrinking `SYSTEM_PROMPT`, or changing model, should check that number.
+
+The byte-stability requirement stands regardless: no per-paper content is ever interpolated
+into the system prompt
 (`tests/test_llm_extractor.py::test_system_prompt_is_cached_and_paper_independent`).
 
 
@@ -268,12 +284,12 @@ root branches are excluded: Mode of inheritance (`HP:0000005`), Clinical modifie
 (`HP:0012823`), Frequency (`HP:0040279`), Past medical history (`HP:0032443`), Blood group,
 Clinical relevance.
 
-**Why (measured).** Those branches contain real HPO terms that are not phenotypes —
+**Why (measured).** Those branches contain real HPO terms that are not phenotypes -
 "Affected", "Unaffected", "Healthy", "Left", "Right", "Bilateral", "Peripheral",
 "Recurrent", "Family history", "Autosomal dominant inheritance". A phenopacket's
 `phenotypicFeatures` never contains them: **100.00% of the 90,549 gold phenotype terms in
 the eval set are `HP:0000118` descendants, and zero are outside it.** Before the fix, only
-68.13% of predicted assertions were — so **31.9% of every phenotype assertion the extractor
+68.13% of predicted assertions were - so **31.9% of every phenotype assertion the extractor
 produced was a guaranteed false positive.**
 
 **Effect.** The largest single quality change in the project:
@@ -286,7 +302,7 @@ produced was a guaranteed false positive.**
 | Assertions in the release | 26,036 | 18,459 | −29% |
 | Polarity-contradiction ERRORs | 1,045 | 639 | −39% |
 
-Gene and diagnosis metrics are unchanged, as expected — the filter applies to HPO only, and
+Gene and diagnosis metrics are unchanged, as expected - the filter applies to HPO only, and
 a test pins that it does not leak into MONDO or gene grounding.
 
 **It propagated downstream.** Re-running the diagnostic benchmark moved pipeline top-1 recall
@@ -298,7 +314,7 @@ complaint, and not by a test. It was found by rendering the reference UI and *lo
 the phenotype chips on real records, where "Affected" and "Autosomal dominant inheritance"
 are obviously not phenotypes. The lesson worth keeping: an aggregate score cannot tell you
 that the units it is aggregating are the wrong kind of thing. Build the thin UI early, and
-read its output — it is a debugging instrument before it is a product.
+read its output - it is a debugging instrument before it is a product.
 
 **Cost.** None identified. Reproducible as an ablation:
 `scripts/run_eval.py --no-phenotype-root`.

@@ -1,8 +1,8 @@
 # Licensing
 
 Conservative by construction. Where the rules are ambiguous we take the restrictive
-reading and accept the lost coverage, because the alternative — being wrong at corpus
-scale, across thousands of publishers — is not recoverable.
+reading and accept the lost coverage, because the alternative - being wrong at corpus
+scale, across thousands of publishers - is not recoverable.
 
 ## The distinction everything rests on
 
@@ -18,7 +18,7 @@ them the sentence.
 ## What we read
 
 Full text is read **only** from the PMC Open Access subset, as reported by the PMC OA
-service (`oa.fcgi`) at fetch time — never inferred from the journal, the publisher, or the
+service (`oa.fcgi`) at fetch time - never inferred from the journal, the publisher, or the
 presence of a PMCID. Being *in* PMC is not the same as being in the OA subset: of 1,733
 gold-set papers, 1,023 are in PMC and only 647 are in the OA subset.
 
@@ -43,9 +43,9 @@ extractor, and it is unit-tested
 
 ### Why ND and NC both land in facts-only
 
-- **NoDerivatives** — a structured extraction is plausibly a derivative work. We do not
+- **NoDerivatives**: a structured extraction is plausibly a derivative work. We do not
   litigate it; we withhold the expression and keep the facts.
-- **NonCommercial** — the dataset is CC-BY, which permits commercial reuse. Redistributing
+- **NonCommercial**: the dataset is CC-BY, which permits commercial reuse. Redistributing
   NC-licensed prose inside a CC-BY dataset would misrepresent the source's terms to
   downstream users. Facts carry no such restriction.
 
@@ -54,9 +54,9 @@ of a licence tier a downstream user can rely on without checking our work.
 
 ## What this repository is licensed as
 
-- **Code** — Apache-2.0.
-- **Extracted data** — CC-BY-4.0, with per-record source attribution, licence, and tier.
-- **Ontology inputs** — HPO and MONDO are CC BY 4.0; HGNC is CC0; Retraction Watch via
+- **Code**: Apache-2.0.
+- **Extracted data**: CC-BY-4.0, with per-record source attribution, licence, and tier.
+- **Ontology inputs**: HPO and MONDO are CC BY 4.0; HGNC is CC0; Retraction Watch via
   Crossref is CC BY 4.0. None are vendored; `make data` fetches them so the user gets them
   under their own terms.
 
@@ -79,7 +79,29 @@ Everything is cached, so re-running analyses does not re-hit the service.
 
 An open question we have deliberately resolved against ourselves: whether structured
 extraction from ND-licensed text is fair use / fair dealing, and whether text-and-data-mining
-exceptions (EU DSM Art. 3/4, UK CDPA s.29A) permit full-text mining beyond the OA subset
-for non-commercial research. They may well. We built for the restrictive reading because
-the plan has no lawyer in it, and a licensing error discovered after publication cannot be
-un-published.
+exceptions permit full-text mining beyond the OA subset for non-commercial research.
+
+Two specific provisions are worth proper legal review rather than our guesswork:
+
+- **UK CDPA s.29A** - a copyright exception for computational analysis for non-commercial
+  research, where the researcher already has lawful access to the work.
+- **EU DSM Directive Art. 3** - a TDM exception for research organisations, again predicated
+  on lawful access.
+
+Both are *cited here as questions, not conclusions.* Neither has been verified against the
+current statute, the case law, or this project's specific facts, and nothing in this
+repository relies on either. The relevant unknowns are at least: what "lawful access" means
+for a personal or institutional subscription, whether a structured extraction counts as a
+permitted copy or a new derivative work, whether the extracted database may then be
+*redistributed* (a separate question from whether it may be *made*), and whether
+"non-commercial" survives publishing under CC BY.
+
+**What that would be worth if it resolved favourably:** §7 of BENCHMARKS puts a number on it.
+The 1,086 `abstract_only` papers currently contribute full-quality gene and diagnosis data
+but only ~half the phenotype signal and essentially no negative findings. Full-text access to
+that tier is the difference between ~4,100 and ~10,400 usable gold cases, and would roughly
+double corpus coverage.
+
+We built for the restrictive reading because the plan has no lawyer in it, and a licensing
+error discovered after publication cannot be un-published. Resolving this is a legal work
+item, not an engineering one.

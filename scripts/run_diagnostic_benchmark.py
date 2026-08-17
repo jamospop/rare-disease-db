@@ -22,7 +22,8 @@ from rdcd.corpus.jats import parse_jats
 from rdcd.eval.diagnose import PhenotypeRanker
 from rdcd.eval.evalset import build_eval_papers
 from rdcd.eval.metrics import mean_reciprocal_rank, topk_recall
-from rdcd.extract.baseline import DictionaryExtractor
+from rdcd.extract.baseline import BaselineConfig, DictionaryExtractor
+from rdcd.schema import Section
 from rdcd.ontology.store import STORE
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,9 +33,15 @@ TOP = 100
 
 def main() -> None:
     track = sys.argv[1] if len(sys.argv) > 1 else "single"
+    # Optional 2nd arg: "abstract-only" simulates the abstract_only licence tier,
+    # answering whether data we ARE allowed to extract from non-OA papers still
+    # supports diagnosis. See docs/BENCHMARKS.md.
+    mode = sys.argv[2] if len(sys.argv) > 2 else "fulltext"
     papers = [p for p in build_eval_papers() if p.track == track]
     ranker = PhenotypeRanker(STORE)
-    ex = DictionaryExtractor(STORE)
+    cfg = BaselineConfig(sections=(Section.TITLE, Section.ABSTRACT)) \
+        if mode == "abstract-only" else BaselineConfig()
+    ex = DictionaryExtractor(STORE, cfg)
 
     agg = {c: {"hits": Counter(), "mrr": 0.0, "n": 0, "no_query": 0, "unmappable_target": 0}
            for c in ("ceiling", "pipeline")}
@@ -73,7 +80,8 @@ def main() -> None:
         if i % 25 == 0:
             print(f"  {i}/{len(papers)} papers", flush=True)
 
-    out = {"track": track, "n_papers": len(per_case), "top_k": list(KS), "conditions": {}}
+    out = {"track": track, "mode": mode, "n_papers": len(per_case),
+           "top_k": list(KS), "conditions": {}}
     for cond, a in agg.items():
         n = a["n"] or 1
         out["conditions"][cond] = {
@@ -89,10 +97,11 @@ def main() -> None:
         for k in KS
     }
     out["extraction_cost"]["mrr_drop"] = round(ce["mrr"] - pi["mrr"], 4)
-    (ROOT / "reports" / f"diagnostic_benchmark_{track}.json").write_text(
+    suffix = track if mode == "fulltext" else f"{track}_{mode}"
+    (ROOT / "reports" / f"diagnostic_benchmark_{suffix}.json").write_text(
         json.dumps({"summary": out, "per_case": per_case}, indent=1))
 
-    print(f"\ntrack={track}  papers scored={out['n_papers']}")
+    print(f"\ntrack={track} mode={mode}  papers scored={out['n_papers']}")
     print(f"{'condition':10} {'n':>4} " + " ".join(f"top{k:<3}" for k in KS) + "   MRR")
     for cond in ("ceiling", "pipeline"):
         c = out["conditions"][cond]

@@ -140,7 +140,7 @@ def main() -> None:
 
 
 def datasheet(m: dict, tiers: Counter) -> str:
-    return f"""# Datasheet — {m['name']} {m['version']}
+    return f"""# Datasheet - {m['name']} {m['version']}
 
 ## What this is
 Individual-level rare-disease case records mined from the published literature, in a
@@ -164,7 +164,7 @@ ontology constraints and ships with its flags.
 {chr(10).join(f'- `{k}`: {v} records' for k, v in sorted(tiers.items()))}
 
 `Evidence.quote` is populated only for sources whose licence permits redistributing
-expression. Character offsets are present for all records regardless of tier — an offset into
+expression. Character offsets are present for all records regardless of tier - an offset into
 a public document is a fact about that document. See docs/LICENSING.md.
 
 ## Known limitations
@@ -181,11 +181,11 @@ clinical decision-making.** Cite the source publication, not this dataset, when 
 the paper's.
 
 ## Files
-- `cases.jsonl` — one record per line, schema v1
-- `phenopackets.jsonl` — the same records as GA4GH Phenopackets v2
-- `sources.jsonl` — per-source identifiers, licence, tier, retraction status
-- `manifest.json` — counts, input versions, build environment
-- `SHA256SUMS` — checksums for every file above
+- `cases.jsonl` - one record per line, schema v1
+- `phenopackets.jsonl` - the same records as GA4GH Phenopackets v2
+- `sources.jsonl` - per-source identifiers, licence, tier, retraction status
+- `manifest.json` - counts, input versions, build environment
+- `SHA256SUMS` - checksums for every file above
 """
 
 

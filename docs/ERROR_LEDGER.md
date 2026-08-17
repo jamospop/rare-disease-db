@@ -10,7 +10,7 @@ Measured on the dictionary baseline over 646 eval papers unless stated. Regenera
 
 ## Our errors
 
-### E1. Missed phenotypes (false negatives) — the largest error class
+### E1. Missed phenotypes (false negatives) - the largest error class
 **Rate.** Observed-phenotype graded F1 0.56 / exact 0.40 on Track SINGLE. A substantial
 share of curated present-findings is still not recovered.
 **Cause.** Dictionary matching only fires on a surface form present in HPO's label or
@@ -23,7 +23,7 @@ across two sentences, and findings stated only as a lab value are all invisible.
 Since 59% of gold features are absent, this is the single worst-performing dimension.
 **Cause.** NegEx-style cue matching catches explicit local negation but not tabular
 notation (`−`, `N`, `absent` in a grid cell), scope over conjunctions ("no seizures,
-microcephaly or ataxia" — only the first is caught), or clinical idiom ("unremarkable").
+microcephaly or ataxia" - only the first is caught), or clinical idiom ("unremarkable").
 **Status.** Open, and under-weighted by the headline metric. Do not read the primary F1 as
 covering this.
 
@@ -44,12 +44,12 @@ from 0.12 to 0.25 but it remains the least developed component.
 **Status.** Open.
 
 ### E5. Unsupported evidence spans
-**Rate.** **0.57%** of 32,173 assertions fail re-verification — 184 cases, all
+**Rate.** **0.57%** of 32,173 assertions fail re-verification - 184 cases, all
 `polarity_mismatch` (the cited span grounds to the claimed term, but re-reading the
 surrounding context yields a different polarity than recorded).
 **Caveat that matters.** For a dictionary extractor this rate is near-tautological: the
 term was found *by* matching that span. It is a floor on measurement quality, not evidence
-that extraction is 99.5% correct — and it is the number to watch when the LLM extractor
+that extraction is 99.5% correct - and it is the number to watch when the LLM extractor
 runs, where it becomes a genuine hallucination rate.
 **Status.** Measured; interpretation flagged.
 
@@ -58,7 +58,7 @@ runs, where it becomes a genuine hallucination rate.
 **Cause.** Case-sensitive symbol matching resolved "LCA" (Leber congenital amaurosis) to
 `GUCY2D` and "KS" (Kabuki/Kallmann syndrome) to `OXSM` via HGNC aliases.
 **Status.** Fixed by an explicit blocklist of clinical abbreviations
-(`grounding.GeneGrounder.AMBIGUOUS`), found *by* the provenance audit — the QA layer
+(`grounding.GeneGrounder.AMBIGUOUS`), found *by* the provenance audit - the QA layer
 catching a real extractor bug is the mechanism working as designed.
 
 ### E7. Gene anchored on the wrong spelling
@@ -66,7 +66,7 @@ catching a real extractor bug is the mechanism working as designed.
 **Cause.** The LLM extractor located its gene anchor by searching for the approved HGNC
 symbol. A paper writing `FOG2` for `ZFPM2` produced a correct gene that was then silently
 dropped for want of an anchor.
-**Status.** Fixed — anchors now try every HGNC alias and previous symbol, and quote the
+**Status.** Fixed - anchors now try every HGNC alias and previous symbol, and quote the
 spelling the paper actually uses.
 
 ### E8. Ungroundable quotes (LLM path)
@@ -77,20 +77,20 @@ grounder recall.
 **Status.** Instrumented, unmeasured. Must be reported before attributing any LLM recall
 shortfall to the model.
 
-### E10. Grounding into non-phenotype HPO branches — **the largest error found, now fixed**
+### E10. Grounding into non-phenotype HPO branches - **the largest error found, now fixed**
 **Rate before fix.** **31.9%** of all phenotype assertions (2,063 of 6,473 over 200 papers).
 **Rate after fix.** 0% by construction.
 **Cause.** HPO contains real terms that are not phenotypic abnormalities: modifiers
 (`Left`, `Right`, `Bilateral`, `Peripheral`, `Recurrent`), status terms (`Affected`,
 `Unaffected`, `Healthy`), `Family history`, `Frequency`, and inheritance modes
 (`Autosomal dominant inheritance`). The grounder matched them happily. A phenopacket's
-`phenotypicFeatures` never contains them — 100.00% of the 90,549 gold phenotype terms are
-`HP:0000118` descendants, and zero are outside it — so every such assertion was a guaranteed
+`phenotypicFeatures` never contains them - 100.00% of the 90,549 gold phenotype terms are
+`HP:0000118` descendants, and zero are outside it - so every such assertion was a guaranteed
 false positive.
 **Effect of the fix.** Track SINGLE graded F1 0.4404 → **0.5581** (+0.1177); exact
 0.3162 → 0.4055; polarity-contradiction ERRORs −39%; release assertion count −29%.
 **How it was found.** By rendering the reference UI and reading the phenotype chips on real
-records — not by the metric, which reported 0.44 without complaint, and not by a test. An
+records - not by the metric, which reported 0.44 without complaint, and not by a test. An
 aggregate score cannot tell you the units it aggregates are the wrong *kind* of thing.
 Evidence: [before](img/ui_before_phenotype_root_fix.png) (chips read `Affected`,
 `Bilateral`, `Autosomal dominant inheritance`) and
@@ -112,21 +112,21 @@ verified exact for every sentence in the parser test.
 Reported for transparency and worth sending upstream. These are not our errors, but they
 bound how high any score can go.
 
-### G1. Onset later than age at last encounter — 77 cases
+### G1. Onset later than age at last encounter - 77 cases
 Internally inconsistent expert phenopackets: encounter `P18Y` with onset `P19Y`;
 encounter `P1D` with onset `P1M21D`. Spot-checked against the raw records; the ISO parser
 handles years, months, weeks, and days, so these are genuine.
 
-### G2. Obligate phenotype recorded absent — 962 cases
+### G2. Obligate phenotype recorded absent - 962 cases
 A feature HPO annotates as obligate (100% frequency) for the diagnosed disease is recorded
 as explicitly absent. Some are curation errors; some are HPO frequency annotations that are
 too strong. Severity WARN, not ERROR, for that reason.
 
-### G3. Unmappable diagnoses — 49 assertions
+### G3. Unmappable diagnoses - 49 assertions
 OMIM identifiers with no MONDO equivalent (e.g. `OMIM:601674`, `OMIM:621570`). 1.2% of gold
 diagnosis assertions, so diagnosis F1 has a hard ceiling of ~0.988.
 
-### G4. Outdated HPO terms — 10 assertions
+### G4. Outdated HPO terms - 10 assertions
 Alias or obsolete term identifiers that resolve via `replaced_by`. Handled transparently by
 `Ontology.normalize`; flagged so drift stays visible.
 
@@ -137,7 +137,7 @@ Alias or obsolete term identifiers that resolve via `replaced_by`. Handled trans
 - **Licence ceiling.** Only 647 of 1,733 gold source papers are readable in full
   (LICENSING). No extraction improvement changes this.
 - **Distant supervision measures the easy cases.** 633/646 papers agree between the stated
-  and extracted diagnosis — but papers that state the answer in the abstract are exactly
+  and extracted diagnosis - but papers that state the answer in the abstract are exactly
   the easy ones. This is a regression detector, not a benchmark.
 - **Sex-linked constraints are effectively unavailable.** 284,958 of 285,598 HPO annotation
   rows have an empty `sex` field (99.8%), so only one disease qualifies as sex-constrained.

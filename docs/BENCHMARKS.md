@@ -17,8 +17,8 @@ Environment: Python 3.13.0, macOS (darwin), phenopacket-store 0.1.27, ontologies
 | phenopacket-store 0.1.27, total | 1,733 | 10,377 |
 | Readable under our licence rules | 647 | 4,149 |
 | Eval set (retracted excluded) | **646** | **4,147** |
-| — Track SINGLE (one gold case per paper) | 261 | 261 |
-| — Track PAPER (gold pooled per document) | 385 | 3,886 |
+|, Track SINGLE (one gold case per paper) | 261 | 261 |
+|, Track PAPER (gold pooled per document) | 385 | 3,886 |
 | Dev / test split | 309 / 337 | 1,932 / 2,215 |
 
 ### Two tracks, never averaged
@@ -26,10 +26,10 @@ Environment: Python 3.13.0, macOS (darwin), phenopacket-store 0.1.27, ontologies
 The gold set is mostly multi-individual cohort papers (median 2 cases per paper, max 462), so
 a single "case-level F1" would be ambiguous.
 
-- **Track SINGLE** — papers contributing exactly one gold case. Prediction and gold are
+- **Track SINGLE**: papers contributing exactly one gold case. Prediction and gold are
   directly comparable with no individual segmentation involved. **This is the clean measure
   of extraction quality**, and the right track for a document-level extractor.
-- **Track PAPER** — all papers, gold pooled per document. Segmentation-free, measures
+- **Track PAPER**: all papers, gold pooled per document. Segmentation-free, measures
   corpus-scale recall, systematically kinder on recall and harsher on precision.
 
 ### Metrics
@@ -38,7 +38,7 @@ a single "case-level F1" would be ambiguous.
 using Lin similarity over the HPO DAG with information content from `phenotype.hpoa`
 (285,598 annotations). Each predicted term earns its best similarity to any gold term
 (precision side); each gold term earns its best similarity to any predicted term (recall
-side). Asymmetric on purpose — one very general prediction should not earn full recall over
+side). Asymmetric on purpose - one very general prediction should not earn full recall over
 ten specific gold terms.
 
 **Similarity threshold 0.5.** Unrelated HPO terms share high-level ancestors
@@ -47,7 +47,7 @@ prediction ~0.26 for free and makes an F1 ≥ 0.85 target partly reachable by co
 Thresholded, a deliberately unrelated prediction scores exactly 0.000.
 
 **Reported alongside, never as a substitute:** exact-match F1; absent-phenotype exact F1
-(scored as a separate population — 59.1% of gold features are `excluded: true`); gene F1
+(scored as a separate population - 59.1% of gold features are `excluded: true`); gene F1
 (canonical HGNC symbols); diagnosis F1 (MONDO-normalised).
 
 **Bootstrap CIs.** 1,000 resamples over cases, fixed seed, percentile method.
@@ -95,11 +95,11 @@ The plan targets F1 ≥ 0.85 on phenotypes, gene, and diagnosis. Current state:
 | Phenotypes (exact) | 0.85 | 0.401 | −0.449 |
 | Gene | 0.85 | 0.826 | −0.024 |
 | Diagnosis | 0.85 | 0.246 | −0.604 |
-| Absent phenotypes | — | 0.108 | (no target set; should have one) |
+| Absent phenotypes |, | 0.108 | (no target set; should have one) |
 
 A dictionary is already within 0.02 of target on genes. Phenotypes and diagnosis are where an
 LLM extractor has to earn its cost, and absent-findings recall is where it has the most room.
-The plan sets no target for absent findings even though they are 59% of the gold data — that
+The plan sets no target for absent findings even though they are 59% of the gold data - that
 is a gap in the plan, not just in the implementation.
 
 ---
@@ -110,14 +110,14 @@ Track SINGLE / all, so the numbers are comparable to the 0.5581 baseline above.
 
 | Configuration | Obs graded F1 | Δ vs baseline | 95% CI |
 |---|---|---|---|
-| Baseline | **0.5581** | — | [0.526, 0.587] |
+| Baseline | **0.5581** |, | [0.526, 0.587] |
 | Phenotype-branch restriction **off** (`--no-phenotype-root`) | 0.4404 | **−0.1177** | [0.414, 0.465] |
 | Patient-section filter **off** (`--all-sections`) | 0.5198 | **−0.0383** | [0.493, 0.543] |
 | Multi-word RELATED synonyms **off** (`--no-related-synonyms`) | 0.5582 | +0.0001 | [0.526, 0.586] |
 
 **Restricting grounding to `HP:0000118` is by far the biggest lever: +0.118 graded F1.**
-HPO contains real terms that are not phenotypes — "Affected", "Bilateral", "Autosomal
-dominant inheritance" — and 100.00% of gold phenotype terms live under Phenotypic
+HPO contains real terms that are not phenotypes - "Affected", "Bilateral", "Autosomal
+dominant inheritance" - and 100.00% of gold phenotype terms live under Phenotypic
 abnormality while only 68.13% of pre-fix predictions did. Nearly a third of every phenotype
 assertion was a guaranteed false positive. See [DECISIONS D21](DECISIONS.md).
 
@@ -126,7 +126,7 @@ assertion was a guaranteed false positive. See [DECISIONS D21](DECISIONS.md).
 discussing other papers' patients.
 
 **The synonym-scope decision does not.** Admitting multi-word BROAD/RELATED synonyms moves
-F1 by **−0.0001** — 1,952 extra phrases for nothing measurable. The qualitative argument
+F1 by **−0.0001**: 1,952 extra phrases for nothing measurable. The qualitative argument
 stands (an extractor that cannot read "hearing loss" is deficient on its face) but the
 measurement gives it no support, and it is recorded as **unsupported by measurement** in
 [DECISIONS D10](DECISIONS.md). Reporting an ablation that failed to confirm a design choice
@@ -146,7 +146,7 @@ is the point of running it.
 | Cited span verifiably supports the assertion | 31,989 (**99.43%**) |
 | Unsupported | 184 (**0.57%**), all `polarity_mismatch` |
 
-**Interpret with care.** For a dictionary extractor this is close to tautological — the term
+**Interpret with care.** For a dictionary extractor this is close to tautological - the term
 was found *by* matching that span, so a high rate is expected. Its value is as a measurement
 floor and as the number that becomes a genuine hallucination rate once an LLM extractor runs.
 The 228 failures are real disagreements: the span grounds to the claimed term but re-reading
@@ -169,13 +169,13 @@ is the quantified cost of not segmenting individuals.
 ### Distant supervision
 
 633 of 646 papers agree between the diagnosis stated in the title/abstract and the diagnosis
-extracted; 13 state none. **This is a regression detector, not a benchmark** — papers that
+extracted; 13 state none. **This is a regression detector, not a benchmark**: papers that
 state the answer up front are exactly the easy ones, so a high score here says little about
 hard cases.
 
 ### Retractions
 
-94,265 Retraction Watch notices indexed. One eval-set paper is retracted (PMID 30850397 —
+94,265 Retraction Watch notices indexed. One eval-set paper is retracted (PMID 30850397 -
 image duplication, IRB failure), caught independently by the PMC OA `retracted` attribute and
 by Retraction Watch. Excluded from the eval set by default; flagged, never deleted.
 
@@ -194,7 +194,7 @@ Running the constraint checker over the 4,149 **expert-curated** cases:
 
 The 77 onset errors are genuine internal inconsistencies in expert data (encounter `P18Y`
 with onset `P19Y`; encounter `P1D` with onset `P1M21D`), spot-checked against raw records.
-Zero polarity contradictions — the curators are internally consistent on polarity, which is
+Zero polarity contradictions: the curators are internally consistent on polarity, which is
 the strongest available validation of the checker's ERROR tier.
 
 ---
@@ -205,11 +205,11 @@ the strongest available validation of the checker's ERROR tier.
 10,089 candidate diseases by information content shared with the query phenotypes, then two
 conditions are run over the same papers with the same target:
 
-- **CEILING** — query built from the expert gold phenotypes. The best this ranker can do if
+- **CEILING**: query built from the expert gold phenotypes. The best this ranker can do if
   extraction were perfect.
-- **PIPELINE** — query built from our extracted phenotypes. The real end-to-end number.
+- **PIPELINE**: query built from our extracted phenotypes. The real end-to-end number.
 
-**CEILING − PIPELINE is what extraction error costs diagnosis, in top-k recall** — and
+**CEILING − PIPELINE is what extraction error costs diagnosis, in top-k recall**: and
 therefore whether the next month belongs to extraction or to the ranker. Ceiling also bounds
 the ranker itself: if ceiling top-20 is low, better extraction cannot rescue it.
 
@@ -231,12 +231,12 @@ error costs **29.5 percentage points of top-1 recall** and 0.25 MRR.
 So the answer to "should the next month go into extraction or into the ranker?" is
 extraction, and it is not close. It also bounds the ranker honestly: ceiling top-20 of 0.798
 means even perfect extraction leaves 20% of cases unranked in the top 20 by this method, so
-a better ranker is eventually needed — just not first.
+a better ranker is eventually needed - just not first.
 
 ### The fix propagated, and the experiment validated itself
 
 This benchmark was run twice, before and after the D21 phenotype-branch fix. The **ceiling
-row is byte-identical** across both runs — exactly as it must be, since gold phenotypes are
+row is byte-identical** across both runs - exactly as it must be, since gold phenotypes are
 untouched by a grounder change. Only the pipeline row moved, which is what makes the
 comparison trustworthy rather than a coincidence:
 
@@ -259,7 +259,51 @@ neurofibromatosis-family diseases in the top 5, with NF1 itself at rank 9.
 
 ---
 
-## 7. What no benchmark here measures
+## 7. What the abstract-only licence tier costs
+
+The licence audit (§1) says 1,086 of 1,733 gold source papers are `abstract_only`: we may
+read their title, abstract, and metadata, but not their full text. That is a wall unless you
+put a number on it. So: take the papers whose full text we *are* allowed to read, and extract
+from them twice.
+
+Same 441 quotable-tier papers, same extractor, same gold, only the input differs.
+`make eval --tier full_text_quotable` vs the same with `--abstract-only`.
+
+| Track | Condition | Phenotype graded F1 | Absent F1 | Gene F1 | Diagnosis F1 |
+|---|---|---|---|---|---|
+| SINGLE (166) | full text | 0.5510 | 0.1182 | 0.8373 | 0.2553 |
+| SINGLE (166) | abstract only | 0.2981 | 0.0089 | 0.8528 | 0.2553 |
+| | **change** | **-0.253 (-46%)** | **-0.109 (-92%)** | **+0.016** | **0.000** |
+| PAPER (275) | full text | 0.6050 | 0.0624 | 0.9016 | 0.1095 |
+| PAPER (275) | abstract only | 0.2143 | 0.0043 | 0.8901 | 0.1095 |
+| | **change** | **-0.391 (-65%)** | **-0.058 (-93%)** | -0.012 | 0.000 |
+
+### What this means for the 63% we cannot read in full
+
+**Gene and diagnosis extraction survive intact.** Gene F1 is unchanged and marginally
+*better* from abstracts alone (0.837 -> 0.853): the causal gene is almost always named in the
+title or abstract, and dropping the body removes false-positive gene mentions from
+discussions. Diagnosis F1 is identical to four decimal places, because the baseline already
+grounds diagnoses only in the title and abstract by design.
+
+**Phenotype extraction retains about half its signal** on single-case papers (0.551 ->
+0.298, 54% of the full-text figure) and about a third on cohort papers (0.605 -> 0.214).
+The Track PAPER drop is steeper for a structural reason: multi-individual papers keep their
+per-patient phenotype grids in body tables, which abstracts do not contain at all.
+
+**Absent findings effectively do not exist in abstracts.** F1 falls from 0.118 to **0.0089**,
+a 92% loss. This is not degradation, it is absence: abstracts report what was found, not what
+was looked for and ruled out. Any record from the `abstract_only` tier must be published with
+an explicit flag that its negative findings are missing rather than negative, or a consumer
+will read "not present in the record" as "reported absent". That distinction is the entire
+point of modelling `excluded` as a positive assertion.
+
+**Verdict: abstract-tier extraction is worth shipping**, with per-field expectations set
+honestly. It delivers full-quality gene and diagnosis data plus roughly half the phenotype
+signal for 1,086 papers otherwise contributing nothing. It must not be published as though
+it were equivalent to full-text extraction, and it must not be scored in the same pool.
+
+## 8. What no benchmark here measures
 
 - **LLM extractor accuracy.** It has never made a live API call (no API key in the build
   environment). Unit-tested offline; accuracy unmeasured.

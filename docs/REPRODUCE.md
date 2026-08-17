@@ -84,18 +84,18 @@ should match exactly.
 
 ## Common failures
 
-**`FileNotFoundError: .../hp.obo missing. Run: make data-ontologies`** — data step not run.
+**`FileNotFoundError: .../hp.obo missing. Run: make data-ontologies`**: data step not run.
 
-**`FileNotFoundError: reports/goldset_availability.json missing. Run: make audit`** — the
+**`FileNotFoundError: reports/goldset_availability.json missing. Run: make audit`**: the
 eval set is defined by the licence audit, so the audit must precede scoring.
 
-**All papers skipped, `papers_skipped_no_cache` equals the paper count** — `make
+**All papers skipped, `papers_skipped_no_cache` equals the paper count**: `make
 fetch-fulltext` has not run. Scoring is cache-only by design and will not silently fall back
 to the network.
 
-**`SSL: CERTIFICATE_VERIFY_FAILED`** — a python.org install whose
+**`SSL: CERTIFICATE_VERIFY_FAILED`**: a python.org install whose
 `Install Certificates.command` was never run. All HTTP goes through `requests` (which ships
 certifi) specifically to avoid this; if it still appears, a proxy CA is missing from certifi.
 
-**NCBI 429s** — the client limits to 2.8 req/s and retries with backoff. Persistent 429s
+**NCBI 429s**: the client limits to 2.8 req/s and retries with backoff. Persistent 429s
 mean another process is sharing the quota.

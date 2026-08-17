@@ -43,7 +43,7 @@ def pytest_report_header(config):
     missing = _missing()
     if missing:
         return (
-            f"rdcd: ontologies not downloaded ({len(missing)} missing) — "
+            f"rdcd: ontologies not downloaded ({len(missing)} missing) - "
             f"ontology-dependent tests will SKIP. Run `make data` to enable them."
         )
-    return "rdcd: ontologies present — full test suite enabled"
+    return "rdcd: ontologies present - full test suite enabled"

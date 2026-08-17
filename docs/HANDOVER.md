@@ -1,4 +1,4 @@
-# Handover — what was built, what was found, what to do next
+# Handover - what was built, what was found, what to do next
 
 A complete record of the month-1 build, written so someone picking this up cold does not
 have to reconstruct the reasoning. Findings are stated with the numbers that produced them
@@ -38,7 +38,7 @@ Hugging Face / Zenodo publication, preprint.
 ## 2. Findings, in order of consequence
 
 ### F1. Conservative licensing costs 60% of the gold eval set
-`reports/goldset_availability.json` — audit of all 1,733 gold source papers.
+`reports/goldset_availability.json` - audit of all 1,733 gold source papers.
 
 | Tier | Papers | Gold cases |
 |---|---|---|
@@ -54,7 +54,7 @@ PubMed's 2,572,683 `case reports[pt]`. This ceiling is unaffected by any extract
 improvement. If the project needs full-text scale beyond the OA subset, that is a *legal*
 work item (TDM exceptions), not an engineering one.
 
-### F2. Extraction, not ranking, is the bottleneck — by 29.5 points of top-1 recall
+### F2. Extraction, not ranking, is the bottleneck - by 29.5 points of top-1 recall
 `reports/diagnostic_benchmark_single.json`, 258 papers, Track SINGLE.
 
 | Condition | top-1 | top-3 | top-10 | top-20 | MRR |
@@ -63,7 +63,7 @@ work item (TDM exceptions), not an engineering one.
 | Pipeline (extracted) | 0.229 | 0.411 | 0.566 | 0.659 | 0.345 |
 | **Cost of extraction error** | **−0.295** | −0.217 | −0.167 | −0.140 | −0.254 |
 
-**Consequence:** spend the next month on extraction. Also bounds the ranker honestly —
+**Consequence:** spend the next month on extraction. Also bounds the ranker honestly -
 ceiling top-20 of 0.798 means even perfect extraction leaves 20% of cases unranked by this
 method, so a better ranker is eventually needed, just not first.
 
@@ -92,10 +92,10 @@ Restricting the grounder to `HP:0000118`:
 **How it was found: by rendering the UI and looking at it.** Not by the primary metric,
 which reported 0.44 for hours without complaint. Not by the 45 tests then passing. The
 before/after screenshots are in `docs/img/`. An aggregate score cannot tell you that the
-units it aggregates are the wrong kind of thing — see `docs/REQUIREMENTS.md` R11.
+units it aggregates are the wrong kind of thing - see `docs/REQUIREMENTS.md` R11.
 
 The diagnostic benchmark, run before and after, produced a **byte-identical ceiling row**
-while only the pipeline row moved — which is what makes the +0.089 attributable to the fix
+while only the pipeline row moved - which is what makes the +0.089 attributable to the fix
 rather than to noise.
 
 ### F4. The expert gold data contains errors the checker catches
@@ -110,11 +110,11 @@ rather than to noise.
 
 The 77 onset errors are genuine (encounter `P18Y` with onset `P19Y`; `P1D` with `P1M21D`),
 spot-checked against raw records. **Worth reporting upstream to Monarch.** Zero polarity
-contradictions in gold — the curators are internally consistent, which is the strongest
+contradictions in gold - the curators are internally consistent, which is the strongest
 available validation of the checker's ERROR tier.
 
 ### F5. A retracted paper sits inside the expert gold set
-PMID 30850397 — image duplication, IRB failure. Caught by the PMC OA `retracted` attribute
+PMID 30850397 - image duplication, IRB failure. Caught by the PMC OA `retracted` attribute
 during the licence audit, independently confirmed by Retraction Watch (94,265 notices
 indexed). Excluded from the eval set by default; flagged, never deleted.
 
@@ -125,7 +125,27 @@ absent-phenotype F1 is **0.108** against 0.557 for present findings.
 **The project plan sets no target for this.** The 0.85 phenotype target can be met while
 being wrong about the majority of the data. This is a gap in the plan, not only the code.
 
-### F7. Two design choices the measurements did *not* support
+### F7. The abstract-only tier costs half the phenotypes and all the negation
+`reports/eval_tier_q_fulltext.json` vs `reports/eval_tier_q_abstract.json`. Same 441
+quotable-tier papers, extracted twice: full text vs title+abstract only.
+
+| | Full text | Abstract only | Change |
+|---|---|---|---|
+| Phenotype graded F1 (SINGLE) | 0.5510 | 0.2981 | -46% |
+| Absent-finding F1 | 0.1182 | 0.0089 | **-92%** |
+| Gene F1 | 0.8373 | 0.8528 | +2% |
+| Diagnosis F1 | 0.2553 | 0.2553 | 0% |
+
+**Consequence:** abstract-tier extraction is worth shipping for the 1,086 papers we cannot
+read in full - gene and diagnosis survive intact, phenotypes retain about half - but records
+from that tier must be flagged as having no negative-finding data. F1 0.0089 is absence, not
+weakness: abstracts report what was found, never what was ruled out. Publishing those records
+unflagged would let a consumer read "absent from the record" as "reported absent".
+
+Full-text access to that tier (a legal question, see `docs/LICENSING.md`) would roughly
+double usable coverage: ~4,100 to ~10,400 gold cases.
+
+### F8. Two design choices the measurements did *not* support
 Recorded because an ablation that fails to confirm a choice is the reason to run it.
 
 - **Multi-word BROAD/RELATED synonyms** (D10): +1,952 phrases for **−0.0001** F1. No
@@ -133,10 +153,22 @@ Recorded because an ablation that fails to confirm a choice is the reason to run
 - **Patient-section filter** (D11): **+0.0383** F1, intervals barely overlapping. Genuinely
   earns its place.
 
-### F8. Bugs found by the QA layer rather than by tests
+### F9. Prompt caching is not worth what I claimed
+Measured on the 129-paper dev run: caching the shared system prompt saves **$0.34 of $13.57
+(2.5%)**. The system prompt is ~585 tokens against ~770,000 tokens of document text, and
+documents are unique per call so cannot be cached. The Batch API is the real lever
+($13.57 -> $6.78). D20 originally called caching load-bearing; that was an unmeasured
+assumption and is now corrected.
+
+**A trap it leaves:** the minimum cacheable prefix is 512 tokens on Claude Opus 5 but 1024 on
+most other models. At 585 tokens this prompt caches on Opus 5 and would **silently stop**
+caching on a model with a 1024 minimum - no error, just `cache_read_input_tokens: 0`. The
+runner prints that number for this reason.
+
+### F10. Bugs found by the QA layer rather than by tests
 The QA suite caught real extractor defects, which is the mechanism working as designed:
 
-- Disease abbreviations resolving to genes via HGNC aliases — `LCA` (Leber congenital
+- Disease abbreviations resolving to genes via HGNC aliases - `LCA` (Leber congenital
   amaurosis) → `GUCY2D`, `KS` (Kabuki/Kallmann) → `OXSM`. Fixed with a blocklist.
 - Gene anchored only on the approved symbol, so a paper writing `FOG2` for `ZFPM2` produced
   a correct gene that was then silently dropped. Fixed to try every HGNC alias and to quote
@@ -157,7 +189,7 @@ Dictionary baseline, 646 papers. Primary metric `observed_phenotype_graded_f1`.
 | paper / all | 385 | 0.440 | 0.606 | [0.581, 0.631] | 0.068 | 0.904 | 0.120 |
 
 Provenance: 99.43% of 32,173 cited spans verifiably support their assertion (0.57% fail, all
-negation-scope disagreements). Note this is near-tautological for a dictionary extractor —
+negation-scope disagreements). Note this is near-tautological for a dictionary extractor -
 its value is as a floor and as the number that becomes a real hallucination rate under an LLM.
 
 Against the plan's targets: gene is within 0.024; phenotypes are −0.293; diagnosis −0.604.
@@ -166,11 +198,23 @@ Against the plan's targets: gene is within 0.024; phenotypes are −0.293; diagn
 
 ## 4. Next actions, in priority order
 
-1. **Run the LLM extractor once, live.** It has never made an API call. Everything about its
-   accuracy is unknown. Needs `ANTHROPIC_API_KEY`; start with ~20 dev papers through
-   `LLMExtractor`, check `GroundingStats.quote_not_found` (hallucination rate) and
-   `quote_ungroundable` (grounder recall loss) *before* judging the model. Then Track SINGLE
-   dev via the harness for a like-for-like number against 0.5581.
+1. **Run the LLM extractor once, live. This is now one command.**
+
+   ```bash
+   echo 'ANTHROPIC_API_KEY=sk-ant-...' > .env     # .env is gitignored
+   make llm-dev-dry     # cost estimate, no API calls
+   make llm-dev         # 129 dev papers, ~$13.57
+   make llm-dev-batch   # same via Batch API, ~$6.78, up to 24h
+   ```
+
+   Everything else in this repository is scaffolding around an unmeasured centrepiece; this
+   run converts it into a result. It prints `quote_not_found` (the model's hallucination
+   rate) and `quote_ungroundable` (our grounder's recall loss) **before** any F1, because a
+   low F1 with high `quote_ungroundable` is a grounder problem, not a model problem. Compare
+   against the dictionary baseline's Track SINGLE dev 0.5597 and the plan's 0.85 target.
+
+   Then re-run `make diagnostic` and watch whether the pipeline row moves toward the ceiling.
+   The observed exchange rate from the D21 fix was +0.089 top-1 per +0.118 phenotype F1.
 2. **Answer the existential question in `docs/REQUIREMENTS.md` §2 Q1.** PMC-Patients (167k)
    and RareArena (70k) already publish structured case collections. Read what they contain.
    If they already provide per-field provenance, phenopacket-native output, and licence

@@ -8,7 +8,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from rdcd.eval.evalset import build_eval_papers
 from rdcd.eval.harness import format_summary, run_extractor, write_report
+from rdcd.schema import Section
 from rdcd.extract.baseline import BaselineConfig, DictionaryExtractor
 from rdcd.ontology.store import STORE
 
@@ -25,15 +27,25 @@ def main() -> None:
                     help="Drop multi-word BROAD/RELATED synonyms (ablation)")
     ap.add_argument("--no-phenotype-root", action="store_true",
                     help="Ground against all of HPO, not just Phenotypic abnormality (ablation)")
+    ap.add_argument("--abstract-only", action="store_true",
+                    help="Extract from title+abstract only, simulating the abstract_only licence tier")
+    ap.add_argument("--tier", default=None,
+                    choices=["full_text_quotable", "full_text_facts_only"],
+                    help="Restrict scoring to one licence tier")
     args = ap.parse_args()
 
     cfg = BaselineConfig(
+        sections=(Section.TITLE, Section.ABSTRACT) if args.abstract_only else None,
         patient_sections_only=not args.all_sections,
         multiword_related_synonyms=not args.no_related_synonyms,
         restrict_to_phenotypic_abnormality=not args.no_phenotype_root,
     )
     ex = DictionaryExtractor(STORE, cfg)
-    res = run_extractor(STORE, ex, splits=tuple(args.splits.split(",")), limit=args.limit)
+    papers = build_eval_papers()
+    if args.tier:
+        papers = [p for p in papers if p.tier == args.tier]
+    res = run_extractor(STORE, ex, papers=papers,
+                        splits=tuple(args.splits.split(",")), limit=args.limit)
     rep = res.report()
     print(format_summary(rep))
     print("\nwrote", write_report(res, args.name))

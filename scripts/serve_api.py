@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read-only API and reference UI over a dataset release.
 
-Standard library only — no framework. This is deliberate: the API is a thin, stable
+Standard library only: no framework. This is deliberate: the API is a thin, stable
 contract over the release files, and a downstream builder who *can* talk to users should
 build a better front end on it. Making the data thick and the UI thin is the hedge for
 never being able to user-test the UI.
@@ -244,12 +244,12 @@ input:focus{outline:2px solid var(--acc);outline-offset:-1px}
   font-size:13px;margin-bottom:20px}
 </style>
 <header><h1>Open Rare-Disease Case Database</h1>
-<div class=sub>Reference UI. Everything here is also available on the JSON API — see <code>/api/stats</code>.</div></header>
+<div class=sub>Reference UI. Everything here is also available on the JSON API - see <code>/api/stats</code>.</div></header>
 <main>
 <div class=warn><b>Research use only.</b> Records were produced by the dictionary baseline
 (graded phenotype F1 0.56; absent-finding F1 0.11). Not for clinical decisions.</div>
 <div class=stats id=stats></div>
-<input id=q placeholder="Search a phenotype — try seizure, microcephaly, hearing loss" autofocus>
+<input id=q placeholder="Search a phenotype - try seizure, microcephaly, hearing loss" autofocus>
 <div class=hint>Matching HPO terms appear first; picking one lists cases. Queries include
 descendant terms, so "Seizure" also matches "Focal-onset seizure".</div>
 <div id=terms></div><div id=out></div>

@@ -13,7 +13,9 @@ REPORTS := reports
 
 .DEFAULT_GOAL := help
 .PHONY: help install data data-ontologies data-goldsets audit fetch-fulltext \
-        eval eval-ablations diagnostic qa reproduce test lint manifest check \
+        eval eval-ablations diagnostic diagnostic-abstract qa reproduce test lint \
+        llm-dev llm-dev-dry llm-dev-batch \
+        manifest check \
         clean clean-cache release api
 
 help:  ## Show this help
@@ -81,6 +83,18 @@ eval-ablations: audit  ## Ablations justifying the baseline's design choices
 
 diagnostic: audit  ## Ceiling vs pipeline top-k diagnostic recall
 	$(PY) -u scripts/run_diagnostic_benchmark.py single
+
+diagnostic-abstract: audit  ## Same, but extracting from title+abstract only (licence-tier cost)
+	$(PY) -u scripts/run_diagnostic_benchmark.py single abstract-only
+
+llm-dev-dry: audit  ## Cost + token estimate for the LLM dev run (no API calls)
+	$(PY) -u scripts/run_llm_dev.py --dry-run
+
+llm-dev: audit  ## Run the LLM extractor on the dev split and score it (needs API key)
+	$(PY) -u scripts/run_llm_dev.py
+
+llm-dev-batch: audit  ## Same via the Batch API (~50% cheaper, up to 24h)
+	$(PY) -u scripts/run_llm_dev.py --batch
 
 qa: audit  ## Constraint + provenance audit over gold and predictions
 	$(PY) -u scripts/run_qa_audit.py

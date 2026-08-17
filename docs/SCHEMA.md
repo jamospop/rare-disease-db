@@ -34,7 +34,7 @@ Convenience views used by the harness: `observed_hpo`, `excluded_hpo`, `gene_sym
 Provenance API: `unprovenanced()` lists field paths asserting something without evidence;
 `enforce_provenance()` returns a cleaned copy plus what was dropped.
 
-## Evidence — the load-bearing type
+## Evidence - the load-bearing type
 
 | Field | Type | Notes |
 |---|---|---|
@@ -54,26 +54,26 @@ citation rather than a hint.
 
 | Field | Notes |
 |---|---|
-| `term` | `OntologyClass` — HPO |
+| `term` | `OntologyClass`, HPO |
 | `excluded` | `True` = the source states it was looked for and **not** found |
 | `onset` | `TimeElement` |
 | `severity` | `OntologyClass` |
 | `negation_cue` | The word that carried the negation, kept for audit |
 
-`excluded` is not "unknown" and not "low confidence" — it is a positive assertion of
+`excluded` is not "unknown" and not "low confidence" - it is a positive assertion of
 absence, and it is 59.1% of the gold data.
 
 ## Other types
 
-- **`OntologyClass`** — `{id, label}`; `id` must be a CURIE (validated).
-- **`TimeElement`** — mirrors the Phenopacket one-of in the forms case reports use:
+- **`OntologyClass`**: `{id, label}`; `id` must be a CURIE (validated).
+- **`TimeElement`**: mirrors the Phenopacket one-of in the forms case reports use:
   ISO-8601 duration, gestational weeks/days, HPO onset class, or an age range.
-- **`Subject`** — `id`, `sex`, `age_at_last_encounter`, `vital_status`.
-- **`DiagnosisAssertion`** — `disease`, `status`, and `stated_in_abstract` (marks the
+- **`Subject`**: `id`, `sex`, `age_at_last_encounter`, `vital_status`.
+- **`DiagnosisAssertion`**: `disease`, `status`, and `stated_in_abstract` (marks the
   distant-supervision population).
-- **`VariantAssertion`** — `gene` (HGNC), `hgvs_c` / `hgvs_p` / `hgvs_g`, `allelic_state`
+- **`VariantAssertion`**: `gene` (HGNC), `hgvs_c` / `hgvs_p` / `hgvs_g`, `allelic_state`
   (GENO), `acmg`.
-- **`SourceDoc`** — `pmid`, `pmcid`, `doi`, bibliographic fields, plus `license`,
+- **`SourceDoc`**: `pmid`, `pmcid`, `doi`, bibliographic fields, plus `license`,
   `in_oa_subset`, `quotes_permitted`, `retracted`, `retraction_notice`.
 
 ## Compatibility policy
