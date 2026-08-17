@@ -1,0 +1,40 @@
+{
+ "gold": {
+  "n_cases": 4149,
+  "violations": {
+   "WARN:obligate_phenotype_excluded": 962,
+   "ERROR:onset_after_last_encounter": 77,
+   "WARN:unmappable_disease": 49,
+   "WARN:outdated_hpo_term": 10
+  }
+ },
+ "predictions": {
+  "n_records": 646,
+  "provenance": {
+   "n_assertions_checked": 32173,
+   "supported": 31989,
+   "support_rate": 0.9943,
+   "unsupported_rate": 0.0057,
+   "by_verdict": {
+    "supported": 31989,
+    "polarity_mismatch": 184
+   }
+  },
+  "violations": {
+   "ERROR:polarity_contradiction": 639,
+   "ERROR:dag_polarity_contradiction": 623,
+   "WARN:gene_disease_mismatch": 63,
+   "WARN:obligate_phenotype_excluded": 10
+  },
+  "distant_supervision_agreement": {
+   "True": 633,
+   "None": 13
+  }
+ },
+ "retractions": {
+  "retraction_watch_notices_indexed": 94265,
+  "eval_papers_retracted": {
+   "30850397": "source=retraction_watch; date=10/7/2024 0:00; reason=Duplication of/in Image;Error in Image;Investigation by Journal/Publisher;Investigation by Third Party;Lack of IRB/IACUC"
+  }
+ }
+}

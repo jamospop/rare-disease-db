@@ -1,0 +1,14 @@
+# Downloaded inputs and caches: large, and regenerable with `make data`.
+data/
+
+# Reports ARE tracked: they are the evidence behind every number in docs/.
+# Regenerable with `make reproduce`, but versioned so claims stay auditable.
+reports/*.html
+
+__pycache__/
+*.pyc
+.venv/
+.env
+*.egg-info/
+.pytest_cache/
+.DS_Store

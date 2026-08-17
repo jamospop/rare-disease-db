@@ -1,0 +1,37 @@
+# Data licence
+
+The **code** in this repository is licensed under the Apache License 2.0 (see `LICENSE`).
+
+The **extracted data** — everything under `data/releases/`, and any dataset built by
+`make release` — is licensed **CC BY 4.0**
+(https://creativecommons.org/licenses/by/4.0/).
+
+Attribution: cite this repository *and* the source publication of any record you rely on.
+Every record carries `source.pmid` / `source.pmcid` / `source.doi` for that purpose.
+
+## What these licences do NOT cover
+
+Neither licence extends to the underlying publications. The extracted facts are ours to
+license; the papers are not. Specifically:
+
+- `Evidence.quote` is populated only for sources whose own licence permits redistributing
+  expression (CC0 / CC BY / CC BY-SA). See `docs/LICENSING.md`.
+- Records derived from sources under NonCommercial or NoDerivatives terms carry facts and
+  character offsets only, with `quotes_permitted: false`.
+- Records derived from sources outside the PMC Open Access subset are abstract-derived only.
+
+Every record states its tier, so you can filter without re-deriving our reasoning.
+
+## Third-party inputs
+
+Fetched by `make data`, not vendored, and each under its own terms:
+
+| Input | Licence |
+|---|---|
+| Human Phenotype Ontology (HPO) | CC BY 4.0 |
+| MONDO Disease Ontology | CC BY 4.0 |
+| HGNC gene nomenclature | CC0 |
+| HPO annotations (`phenotype.hpoa`) | HPO terms of use |
+| GA4GH phenopacket-store | See the Monarch Initiative repository |
+| PubMed / PMC E-utilities | NCBI terms; requires a contact email per request |
+| Retraction Watch (via Crossref) | CC BY 4.0 |

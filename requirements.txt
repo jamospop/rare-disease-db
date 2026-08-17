@@ -1,0 +1,11 @@
+# Core (required)
+pydantic>=2.7
+requests>=2.31
+lxml>=5.0
+
+# Optional: only needed to run the LLM extractor (rdcd/extract/llm.py).
+# Everything else - corpus, ontologies, baseline, eval, QA - runs without it.
+anthropic>=0.83
+
+# Development
+pytest>=8.0
