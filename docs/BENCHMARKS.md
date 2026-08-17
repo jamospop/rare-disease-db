@@ -304,43 +304,133 @@ F1 says half the phenotype signal survives. The question that actually decides s
 whether that half still ranks the right disease. `make diagnostic-abstract`, same 258 papers,
 same ranker, same ceiling:
 
-| Condition | top-1 | top-3 | top-5 | top-10 | top-20 | MRR |
-|---|---|---|---|---|---|---|
-| Ceiling (gold phenotypes) | 0.523 | 0.628 | 0.686 | 0.733 | 0.798 | 0.599 |
-| Pipeline, full text | 0.229 | 0.411 | 0.469 | 0.566 | 0.659 | 0.345 |
-| Pipeline, abstract only | 0.082 | 0.172 | 0.232 | 0.331 | 0.425 | 0.158 |
+**All figures below were produced by the dictionary baseline** (`dictionary-v1`). They
+describe the licence tier *under that extractor*, not the tier itself. See ERROR_LEDGER H2,
+and re-run this table when a new extractor lands.
 
-**Retention of full-text performance is strongly k-dependent:**
+Conditional (averaged over papers that produced a query, the conventional figure):
 
-| | top-1 | top-10 | top-20 | MRR |
-|---|---|---|---|---|
-| Abstract-only as a share of full-text | **36%** | 58% | **64%** | 46% |
+| Condition | top-1 | top-3 | top-5 | top-10 | top-20 | MRR | coverage |
+|---|---|---|---|---|---|---|---|
+| Ceiling (gold phenotypes) | 0.523 | 0.628 | 0.686 | 0.733 | 0.798 | 0.599 | 1.000 |
+| Pipeline, full text | 0.229 | 0.411 | 0.469 | 0.566 | 0.659 | 0.345 | 1.000 |
+| Pipeline, abstract only | 0.082 | 0.172 | 0.232 | 0.331 | 0.425 | 0.158 | **0.903** |
 
-**Abstract-tier data shortlists but does not pinpoint.** It keeps 64% of full-text top-20
-recall and only 36% of top-1. Fewer phenotypes still narrow the candidate set usefully, but
+Unconditional (the 25 no-query papers count as misses, which is what a corpus user
+experiences). Identical to the above for the first two rows, which had full coverage:
+
+| Condition | top-1 | top-10 | top-20 |
+|---|---|---|---|
+| Pipeline, full text | 0.229 | 0.566 | 0.659 |
+| Pipeline, abstract only | **0.074** | **0.298** | **0.384** |
+
+**Retention of full-text performance is strongly k-dependent** (unconditional, so
+apples-to-apples):
+
+| | top-1 | top-10 | top-20 |
+|---|---|---|---|
+| Abstract-only as a share of full-text | **32%** | 53% | **58%** |
+
+**Abstract-tier data shortlists but does not pinpoint.** It keeps 58% of full-text top-20
+recall and only 32% of top-1. Fewer phenotypes still narrow the candidate set usefully, but
 not enough to rank one disease first. So the honest framing of what this tier supports is
-*candidate generation*, not *diagnosis*: the right answer is in the top 20 for 4 cases in 10,
-against 6.6 in 10 with full text and 8 in 10 with expert phenotypes.
+*candidate generation*, not *diagnosis*: the right answer is in the top 20 for **3.8 cases in
+10** counting failures (4.2 among papers that yielded any phenotype), against 6.6 in 10 with
+full text and 8 in 10 with expert phenotypes.
 
-**A 10% hard-failure rate that F1 hides.** Only **233 of 258** abstract-only papers produced
+**A 10% hard-failure rate that conditional metrics hide** (now a named hazard class,
+ERROR_LEDGER H1). Only **233 of 258** abstract-only papers produced
 a query at all: 25 papers yielded no groundable phenotype from the abstract, so they cannot be
 ranked at any k. F1 aggregates over papers that produced output and never shows this; the
 per-condition `no_query` count in the report does.
 
 **Verdict: abstract-tier extraction is worth shipping**, with per-field expectations set
 honestly. It delivers full-quality gene and diagnosis data, roughly half the phenotype signal,
-and 64% of full-text top-20 diagnostic retention, for 1,086 papers otherwise contributing
-nothing. Three conditions on publishing it:
+and 58% of full-text top-20 diagnostic retention, for 1,086 papers otherwise contributing
+nothing. It is a **recall layer**: get the right disease into the candidate set, and let
+something ranking on richer data order it. Three conditions on publishing it:
 
 1. Records carry their tier, and are not scored in the same pool as full-text records.
 2. Absent findings are flagged as **missing, not negative** (F1 0.0089 is absence).
 3. The tier is described as supporting candidate shortlisting, not top-1 diagnosis, and
    ~10% of its records will have no phenotypes at all.
 
-## 8. What no benchmark here measures
+## 8. Pilot: an LLM extractor, measured without an API key
 
-- **LLM extractor accuracy.** It has never made a live API call (no API key in the build
-  environment). Unit-tested offline; accuracy unmeasured.
+No API key was available, so the LLM extractor was run a different way: the document
+text of the first 7 dev-split papers was written to disk (`make manual-prep`), an
+assistant with filesystem access but no API access read them and wrote schema-conformant
+JSON, and `make manual-score` ground and scored that JSON **through the same
+`ResponseParser` as the API path**. Only the transport differs.
+
+Papers were the first 7 by PMID, not chosen: picking the easy ones would inflate the
+result. 98 findings across 14 individuals.
+
+### Grounding, which decides how to read the F1
+
+| | Pilot | Meaning |
+|---|---|---|
+| Quote not found in document | **0 / 98 (0.0%)** | Hallucination rate. Every quote was verbatim. |
+| Quote/label ungroundable | 1 / 98 (1.0%) | Our grounder's loss, not the extractor's error |
+| Grounded and scored | 97 / 98 | |
+| Provenance support | **1.000** | Every cited span verified, every derivation re-checked |
+| Constraint violations | none | |
+
+**The design's core claim holds.** Requiring a verbatim quote and assigning ontology
+identifiers ourselves produced a 0% hallucination rate on real papers. Nothing fabricated
+entered the database, and nothing needed to be caught downstream.
+
+### Accuracy (n=7, Track SINGLE dev)
+
+| Metric | Pilot (best-match) | Pilot (first individual) | Dictionary baseline | Δ |
+|---|---|---|---|---|
+| Phenotype graded F1 | **0.7117** | 0.6181 | 0.5597 | **+0.152** |
+| Phenotype exact F1 | 0.4146 | 0.3291 | 0.4110 | **+0.004** |
+| Absent-finding F1 | 0.0588 | 0.0625 | 0.1186 | **-0.060** |
+| Gene F1 | 0.8571 | 0.8571 | 0.8872 | -0.030 |
+| Diagnosis F1 | 0.3077 | 0.3077 | 0.2451 | +0.063 |
+
+95% CI on the primary metric: best-match [0.624, 0.823], first-individual [0.461, 0.755].
+Two of the seven papers describe multiple individuals, so first-vs-best differ only there;
+both are reported because picking the first predicted individual to compare against a
+single curated one is arbitrary (see the note in `score_manual_extraction.py`).
+
+### What this actually says
+
+**The gain is entirely in graded F1, not exact.** +0.152 graded, +0.004 exact. The LLM
+extractor is not matching the curator's vocabulary better than a dictionary does; it is
+picking *semantically adjacent* terms for concepts the dictionary misses entirely. That is
+a real gain for a downstream ranker that works over the HPO DAG, and close to no gain at
+all for anything doing exact term matching. Anyone quoting one number should quote both.
+
+**Absent findings got worse, not better.** 0.059 against the baseline's 0.119, even though
+the `label` field was added specifically so absent findings could ground at all. So the
+single largest gap in the project (59% of the target) is not closed by moving to an LLM
+extractor in this configuration. This is the most useful negative result here.
+
+**Neither approach is near the plan's 0.85 target.** The CI upper bound is 0.823.
+
+### Threats to validity, stated plainly
+
+- **n=7.** The CI is ±0.10. This is a pilot, not the go/no-go run.
+- **Not the API path.** The extractor read 7 papers sequentially in one context rather than
+  receiving each in a fresh one, so cross-paper learning of conventions cannot be ruled out
+  and would inflate later papers. The API path has no such channel. It also did not use the
+  strict tool-schema validator, though `check_quotes.py` enforced the one hard rule.
+- **Same model family as the API target**, so this measures roughly the right thing, but
+  "roughly" is carrying weight.
+- **The extractor had ontology access in principle** and deliberately did not query HPO when
+  choosing labels, to keep parity with a model that has none. That is a discipline, not an
+  enforced constraint.
+- **After scoring, the extractor has seen gold** for these 7 papers, so it cannot extend this
+  pilot without contamination. Papers 8-30 must be done by the API path or a fresh context.
+
+`make llm-dev` remains the real run: 129 papers, fresh context each, strict schema, ~$13.57.
+
+## 9. What no benchmark here measures
+
+- **LLM extractor accuracy via the API path.** Still no live API call. §8 is a 7-paper
+  pilot through a different transport, with the validity threats listed there.
 - **Corpus-scale performance.** All results are on 646 gold-set papers, not the 2.57M
   `case reports[pt]` in PubMed.
 - **Downstream clinical utility.** Top-k recall against a curated diagnosis is not the same

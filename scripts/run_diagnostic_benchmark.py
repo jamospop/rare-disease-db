@@ -82,14 +82,26 @@ def main() -> None:
 
     out = {"track": track, "mode": mode, "n_papers": len(per_case),
            "top_k": list(KS), "conditions": {}}
+    total = len(per_case) or 1
     for cond, a in agg.items():
         n = a["n"] or 1
         out["conditions"][cond] = {
             "n_scored": a["n"],
+            "n_papers_in_scope": len(per_case),
             "no_query": a["no_query"],
             "unmappable_target": a["unmappable_target"],
+            # Conditional: averaged over papers that produced a query. This is the
+            # conventional figure and it is BLIND to total failures.
             "topk_recall": {str(k): round(a["hits"][k] / n, 4) for k in KS},
             "mrr": round(a["mrr"] / n, 4),
+            # Unconditional: a paper that produced no query counts as a miss, which
+            # is what a user of the corpus actually experiences. Report both; quote
+            # the unconditional one when comparing coverage. See ERROR_LEDGER H1.
+            "topk_recall_unconditional": {
+                str(k): round(a["hits"][k] / total, 4) for k in KS
+            },
+            "mrr_unconditional": round(a["mrr"] / total, 4),
+            "coverage": round(a["n"] / total, 4),
         }
     ce, pi = out["conditions"]["ceiling"], out["conditions"]["pipeline"]
     out["extraction_cost"] = {
@@ -97,6 +109,11 @@ def main() -> None:
         for k in KS
     }
     out["extraction_cost"]["mrr_drop"] = round(ce["mrr"] - pi["mrr"], 4)
+    out["extraction_cost_unconditional"] = {
+        f"top{k}_absolute_drop": round(
+            ce["topk_recall_unconditional"][str(k)] - pi["topk_recall_unconditional"][str(k)], 4)
+        for k in KS
+    }
     suffix = track if mode == "fulltext" else f"{track}_{mode}"
     (ROOT / "reports" / f"diagnostic_benchmark_{suffix}.json").write_text(
         json.dumps({"summary": out, "per_case": per_case}, indent=1))
@@ -107,6 +124,12 @@ def main() -> None:
         c = out["conditions"][cond]
         print(f"{cond:10} {c['n_scored']:>4} " +
               " ".join(f"{c['topk_recall'][str(k)]:.3f}" for k in KS) + f"  {c['mrr']:.3f}")
+    print(f"\n{'(unconditional: papers with no query count as misses)':<58}")
+    for cond in ("ceiling", "pipeline"):
+        c = out["conditions"][cond]
+        print(f"{cond:10} {c['n_papers_in_scope']:>4} " +
+              " ".join(f"{c['topk_recall_unconditional'][str(k)]:.3f}" for k in KS) +
+              f"  {c['mrr_unconditional']:.3f}   coverage {c['coverage']:.3f}")
     print("cost of extraction error:", json.dumps(out["extraction_cost"]))
 
 

@@ -42,6 +42,7 @@ def quote_at(phrase: str) -> str:
 
 
 def response_with(findings, **individual):
+    findings = [{"label": "", **f} for f in findings]
     ind = {
         "label": "the proband", "sex": "FEMALE", "age_at_last_encounter": "P3Y",
         "vital_status": "ALIVE", "findings": findings, "gene_symbol": "",
@@ -106,6 +107,41 @@ def test_quotes_ground_to_hpo_with_real_offsets():
     for ph in r.phenotypes:                      # offsets must be real
         e = ph.evidence[0]
         assert d.text[e.start : e.end].lower() in ph.term.label.lower() or e.start >= 0
+
+
+def test_label_grounds_findings_whose_quote_has_no_ontology_term():
+    """The reason `label` exists.
+
+    Clinical prose states absence as "X was normal", which contains no HPO term, so
+    grounding the raw span loses the finding. Measured on real papers: 100% of absent
+    findings and 47% of findings overall. The label carries a normalised clinical term;
+    the quote still anchors provenance and is still verified verbatim.
+    """
+    p = ResponseParser(STORE)
+    normal_phrase = quote_at("Hearing loss was absent")
+    resp = response_with([
+        {"quote": normal_phrase, "label": "hearing impairment", "absent": True, "onset": ""},
+    ])
+    recs, stats = p.parse(doc(), src(), p.tool_input(resp), extractor="llm:test")
+    assert recs[0].excluded_hpo == {"HP:0000365"}
+    assert stats.grounded == 1
+    # Provenance still points at the real sentence, not at the label.
+    ev = recs[0].phenotypes[0].evidence[0]
+    assert doc().text[ev.start : ev.end] == normal_phrase
+
+
+def test_label_cannot_smuggle_in_an_ontology_id():
+    """A label that does not ground is dropped; the model can never supply an id."""
+    p = ResponseParser(STORE)
+    resp = response_with([
+        {"quote": quote_at("seizures"), "label": "HP:0001250", "absent": False, "onset": ""},
+    ])
+    recs, stats = p.parse(doc(), src(), p.tool_input(resp), extractor="llm:test")
+    # "HP:0001250" is not a groundable clinical phrase, so it falls back to the quote,
+    # which does ground - the id itself is never trusted.
+    assert recs[0].observed_hpo == {"HP:0001250"}
+    ev = recs[0].phenotypes[0].evidence[0]
+    assert doc().text[ev.start : ev.end] == quote_at("seizures")
 
 
 def test_hallucinated_quote_is_dropped_not_kept():

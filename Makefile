@@ -14,7 +14,7 @@ REPORTS := reports
 .DEFAULT_GOAL := help
 .PHONY: help install data data-ontologies data-goldsets audit fetch-fulltext \
         eval eval-ablations diagnostic diagnostic-abstract qa reproduce test lint \
-        llm-dev llm-dev-dry llm-dev-batch \
+        llm-dev llm-dev-dry llm-dev-batch manual-prep manual-score \
         manifest check \
         clean clean-cache release api
 
@@ -95,6 +95,12 @@ llm-dev: audit  ## Run the LLM extractor on the dev split and score it (needs AP
 
 llm-dev-batch: audit  ## Same via the Batch API (~50% cheaper, up to 24h)
 	$(PY) -u scripts/run_llm_dev.py --batch
+
+manual-prep: audit  ## Write dev-split document text for extraction without an API key
+	$(PY) -u scripts/prepare_manual_extraction.py --limit 30
+
+manual-score: audit  ## Ground + score extraction JSON written by hand or by an assistant
+	$(PY) -u scripts/score_manual_extraction.py
 
 qa: audit  ## Constraint + provenance audit over gold and predictions
 	$(PY) -u scripts/run_qa_audit.py

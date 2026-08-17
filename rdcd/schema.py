@@ -181,6 +181,17 @@ class PhenotypeAssertion(Asserted):
     negation_cue: str | None = Field(
         default=None, description="The word that carried the negation, for audit"
     )
+    grounded_from: str | None = Field(
+        default=None,
+        description=(
+            "The text that was grounded to produce `term`. Usually the evidence quote "
+            "itself; for an extractor that supplies a normalised label, the label. "
+            "Recorded so verification can re-check the SAME derivation instead of "
+            "guessing at it: clinical prose states absence as 'X was normal', which "
+            "contains no ontology term, so re-grounding the raw span would report a "
+            "correctly-derived assertion as unsupported."
+        ),
+    )
 
     def to_phenopacket(self) -> dict[str, Any]:
         d: dict[str, Any] = {"type": self.term.model_dump(exclude_none=True)}

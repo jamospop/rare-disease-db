@@ -49,8 +49,30 @@ QA suite, diagnostic benchmark, release builder, read API + UI. 47 offline tests
 - Apache-2.0 `LICENSE` and `LICENSE-DATA`; personal email replaced with a placeholder and a
   warning; `FILES.md` + a self-checking manifest generator; em dashes removed from prose.
 
+### Measured (pilot)
+
+- First LLM extraction, without an API key: document text written to disk, read by an
+  assistant with filesystem access, scored through the same parser as the API path
+  (`make manual-prep` / `make manual-score`). n=7, first papers by PMID.
+  **0% hallucination**, provenance 1.000, graded F1 0.712 vs the 0.560 dictionary floor,
+  but exact F1 unchanged (0.415 vs 0.411) and absent-finding F1 *worse* (0.059 vs 0.119).
+
+### Added
+
+- `label` field on findings: the extractor supplies a normalised clinical term alongside the
+  verbatim quote, and the label is what gets grounded. Grounder loss fell from **46.8% to
+  2.2%** and absent findings became recoverable at all. No identifier ever originates with
+  the model; an ungroundable label is still dropped.
+- `grounded_from` on `PhenotypeAssertion`, so the provenance verifier re-checks the same
+  derivation it used rather than re-grounding the raw span.
+- Unconditional top-k metrics and `coverage` on the diagnostic benchmark, alongside the
+  conventional conditional figures.
+
 ### Corrected
 
+- **The provenance verifier reported 44% of sound assertions as unsupported** once labels
+  were introduced, because it re-grounded the span instead of the derivation. Support rate
+  0.5645 was an artifact; it is 1.000 with the fix, and the dictionary path is unaffected.
 - **D20 overstated prompt caching.** Measured: it saves $0.34 of $13.57 (2.5%), not a design
   pillar. The Batch API is the real lever. Also documented the 512-vs-1024 cache-minimum
   trap that would silently disable caching on a model change.

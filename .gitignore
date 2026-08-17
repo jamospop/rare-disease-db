@@ -5,6 +5,7 @@ data/
 # Regenerable with `make reproduce`, but versioned so claims stay auditable.
 reports/*.html
 
+work/
 __pycache__/
 *.pyc
 .venv/

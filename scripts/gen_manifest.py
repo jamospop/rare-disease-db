@@ -65,6 +65,9 @@ DESC: dict[str, str] = {
     "scripts/build_release.py": "Versioned release: JSONL + phenopackets + datasheet + SHA256SUMS.",
     "scripts/serve_api.py": "Read API + reference UI (stdlib only). The instrument that found D21.",
     "scripts/gen_manifest.py": "Regenerates FILES.md from disk.",
+    "scripts/prepare_manual_extraction.py": "Writes document text for extraction without an API key.",
+    "scripts/score_manual_extraction.py": "Grounds + scores that extraction through the API code path.",
+    "scripts/check_quotes.py": "Verifies every quote is verbatim; consults no gold data.",
     "tests/conftest.py": "Skips ontology-dependent tests cleanly before `make data`.",
     "tests/test_schema.py": "Round-trip and provenance-or-null enforcement.",
     "tests/test_ontology.py": "OBO parsing, xref modifiers, negation, HP:0000118 restriction.",
@@ -93,7 +96,7 @@ RELEASE = {
     "SHA256SUMS": "Checksums for every file above.",
 }
 
-SKIP_DIRS = {"data", ".git", "__pycache__", ".pytest_cache", "reports"}
+SKIP_DIRS = {"data", "work", ".git", "__pycache__", ".pytest_cache", "reports"}
 
 
 def line_count(p: Path) -> int | None:

@@ -66,11 +66,22 @@ class ProvenanceVerifier:
             if not span.strip():
                 out.append(SpanVerdict(name, EMPTY_SPAN))
                 continue
-            # Does the span ground to the claimed term, or a close relative?
+            # Two independent things must hold, and they are different questions:
+            #   1. PROVENANCE - the cited span is really in the document at those
+            #      offsets. Checked above by reading doc.text[start:end].
+            #   2. DERIVATION - the text that was grounded really does yield the
+            #      claimed term. That text is `grounded_from` when the extractor
+            #      supplied a normalised label, and the span otherwise. Re-grounding
+            #      the span when the term came from a label would fail every
+            #      correctly-derived absent finding ("the heart was grossly normal"
+            #      contains no ontology term), which is exactly what it did before
+            #      this field existed: it reported 44% of sound assertions as
+            #      unsupported.
             claimed = self.store.hpo.normalize(p.term.id)
+            derivation = p.grounded_from or span
             found = {
                 self.store.hpo.normalize(m.term_id)
-                for m in self.grounder.find(span)
+                for m in self.grounder.find(derivation)
             }
             found.discard(None)
             related = False
@@ -81,10 +92,19 @@ class ProvenanceVerifier:
                         related = True
                         break
             if not related:
-                out.append(SpanVerdict(name, TERM_ABSENT, span_text=span[:120],
-                                       detail=f"span grounds to {sorted(x for x in found if x)[:3]}"))
+                out.append(SpanVerdict(
+                    name, TERM_ABSENT, span_text=span[:120],
+                    detail=f"{derivation!r} grounds to {sorted(x for x in found if x)[:3]}, "
+                           f"not to {claimed}"))
                 continue
             # Polarity: re-read the surrounding sentence, not just the term span.
+            # Skipped when the term came from a label rather than the span: the
+            # label names the abnormality and the span may phrase it as normality,
+            # so cue-matching the span would contradict a correct `excluded` flag.
+            if p.grounded_from and p.grounded_from != span:
+                out.append(SpanVerdict(name, OK, span_text=span[:120],
+                                       detail="derived from label; polarity as asserted"))
+                continue
             ctx_start = max(0, ev.start - self.pad)
             ctx = doc.text[ctx_start : min(len(doc.text), ev.end + self.pad)]
             rel_start = ev.start - ctx_start

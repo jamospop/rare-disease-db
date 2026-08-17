@@ -172,7 +172,37 @@ most other models. At 585 tokens this prompt caches on Opus 5 and would **silent
 caching on a model with a 1024 minimum - no error, just `cache_read_input_tokens: 0`. The
 runner prints that number for this reason.
 
-### F10. Bugs found by the QA layer rather than by tests
+### F11. The quote-only design was strangling the grounder; a label field fixed it
+Running an LLM extractor for the first time (§8 of BENCHMARKS) exposed an architectural
+fault the unit tests could not:
+
+| | Quote-only | With `label` |
+|---|---|---|
+| Hallucination rate (quote not in document) | 0.0% | 0.0% |
+| Grounder loss (correct finding, unmappable) | **46.8%** | **2.2%** |
+| Absent findings surviving | **0 of all** | recovered |
+
+Cause: clinical prose states absence as "the heart was grossly normal", which contains no
+ontology term, so grounding the raw span lost **every** absent finding and nearly half of
+findings overall. The fix adds a `label` field: the extractor supplies a normalised clinical
+term alongside the verbatim quote, and we ground the label. The quote still anchors
+provenance and is still verified verbatim, and an ungroundable label is still dropped, so no
+identifier ever originates with the model.
+
+This also required fixing the provenance verifier, which re-grounded the span and therefore
+reported 44% of *correctly derived* assertions as unsupported (support rate 0.5645). Assertions
+now record `grounded_from`, so verification re-checks the same derivation it used. Support
+returned to 1.000; the dictionary path is unaffected (0.9994).
+
+### F12. The pilot's gain is in graded F1 only, and absent findings got worse
+n=7, first 7 dev papers by PMID. Graded F1 0.712 vs the baseline's 0.560 (+0.152), but exact
+F1 **0.415 vs 0.411** - a rounding error. The extractor picks semantically adjacent terms for
+concepts the dictionary misses; it does not match curator vocabulary better. And
+absent-finding F1 **fell** to 0.059 from 0.119, so the project's largest gap is not closed by
+switching extractor. Full validity threats in BENCHMARKS §8; the headline one is n=7 through a
+non-API transport.
+
+### F13. Bugs found by the QA layer rather than by tests
 The QA suite caught real extractor defects, which is the mechanism working as designed:
 
 - Disease abbreviations resolving to genes via HGNC aliases - `LCA` (Leber congenital
@@ -204,6 +234,10 @@ Against the plan's targets: gene is within 0.024; phenotypes are −0.293; diagn
 ---
 
 ## 4. Next actions, in priority order
+
+0. **A 7-paper pilot now exists** (BENCHMARKS §8) with 0% hallucination and graded F1 0.712
+   vs the 0.560 floor. It does **not** replace the real run: n=7, non-API transport, and the
+   pilot's extractor has now seen gold for those papers so it cannot extend them.
 
 1. **Run the LLM extractor once, live. This is now one command.**
 

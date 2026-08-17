@@ -84,6 +84,18 @@ FINDING_SCHEMA: dict[str, Any] = {
                 "not the whole sentence. If you cannot copy it exactly, omit the finding."
             ),
         },
+        "label": {
+            "type": "string",
+            "description": (
+                "The finding as a standard clinical term, normalised - e.g. quote "
+                "'the heart was determined to be grossly normal' -> label "
+                "'abnormality of the heart'; quote 'IQ of 62' -> label "
+                "'intellectual disability'. Name the ABNORMALITY even when the source "
+                "states it was absent; `absent` carries the polarity. Do NOT output an "
+                "ontology identifier - text only. Leave empty to fall back to grounding "
+                "the quote itself."
+            ),
+        },
         "absent": {
             "type": "boolean",
             "description": (
@@ -97,7 +109,7 @@ FINDING_SCHEMA: dict[str, Any] = {
             "description": "Age at onset as ISO-8601 duration (P3Y, P2M) if stated, else empty.",
         },
     },
-    "required": ["quote", "absent", "onset"],
+    "required": ["quote", "label", "absent", "onset"],
     "additionalProperties": False,
 }
 
@@ -179,22 +191,24 @@ fix hyphenation, or tidy whitespace. A quote that is not a literal substring of 
 document is discarded, and the finding is lost. Prefer the shortest phrase that names \
 the finding.
 
-2. NEGATION IS HALF THE SIGNAL. Curators record explicitly absent findings as \
+2. LABEL THE ABNORMALITY, NOT THE WORDING. Alongside each quote, give `label`: the finding as a standard clinical term. "the heart was grossly normal" -> label "abnormality of the heart"; "IQ of 62" -> label "intellectual disability". Always name the abnormality, even for findings the source says were ABSENT - `absent` carries the polarity, not the label. Without this, absent findings are unrecoverable, because prose states them as "X was normal" and there is no clinical term in that span to match.
+
+3. NEGATION IS HALF THE SIGNAL. Curators record explicitly absent findings as \
 carefully as present ones, and absent findings outnumber present ones in the gold \
 data. "no seizures", "normal hearing", "renal ultrasound was unremarkable", \
 "ruled out" are all findings with absent=true. Do not silently drop them. But a \
 finding never mentioned at all is not absent - omit it entirely.
 
-3. ONE ENTRY PER PATIENT. Cohort papers describe many individuals, often in tables \
+4. ONE ENTRY PER PATIENT. Cohort papers describe many individuals, often in tables \
 where each column or row is one person. Attribute each finding to the individual it \
 belongs to. If a finding is reported for the cohort as a whole and cannot be assigned \
 to an individual, leave it out and say so in notes.
 
-4. THIS PAPER'S PATIENTS ONLY. Introductions and discussions describe previously \
+5. THIS PAPER'S PATIENTS ONLY. Introductions and discussions describe previously \
 published cases. Those are not this paper's patients. Extract only individuals whose \
 clinical data this paper reports.
 
-5. OMIT RATHER THAN GUESS. Empty string for anything not stated. Do not infer sex \
+6. OMIT RATHER THAN GUESS. Empty string for anything not stated. Do not infer sex \
 from a name, do not convert "young adult" into a number, do not upgrade a suspected \
 diagnosis into a confirmed one. A missing field costs far less than a wrong one.
 
@@ -351,10 +365,25 @@ class ResponseParser:
                     stats.quote_not_found += 1
                     continue
                 start, end = span
-                hits = self.pheno.find(quote)
-                term = next(
-                    (t for t in (self.store.hpo.normalize(h.term_id) for h in hits) if t), None
-                )
+                # Ground the normalised label if given, else the quote span itself.
+                # Clinical prose states negation as "X was normal", which contains no
+                # HPO term at all, so grounding the raw span loses essentially every
+                # absent finding (measured: 100% of them, and 47% of findings overall).
+                # The label fixes that without letting the model emit identifiers: it
+                # supplies text, the ontology supplies the id, and an ungroundable
+                # label is still dropped.
+                label = (f.get("label") or "").strip()
+                term = None
+                for candidate in (label, quote):
+                    if not candidate:
+                        continue
+                    hits = self.pheno.find(candidate)
+                    term = next(
+                        (t for t in (self.store.hpo.normalize(h.term_id) for h in hits) if t),
+                        None,
+                    )
+                    if term:
+                        break
                 if term is None:
                     stats.quote_ungroundable += 1
                     continue
@@ -366,6 +395,7 @@ class ResponseParser:
                         term=OntologyClass(id=term, label=self.store.hpo.label(term)),
                         excluded=bool(f.get("absent")),
                         onset=_time_element(onset),
+                        grounded_from=(label or quote),
                         evidence=[
                             Evidence(
                                 source_id=source.curie,

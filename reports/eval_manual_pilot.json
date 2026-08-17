@@ -1,0 +1,328 @@
+{
+ "extractor": "claude-code-insession-v1",
+ "transport": "no API; extraction produced by an assistant with filesystem access",
+ "track": "single",
+ "split": "dev",
+ "papers_prepared": 30,
+ "papers_extracted": 7,
+ "papers_missing_json": [
+  "21677813",
+  "22508010",
+  "22539873",
+  "22701786",
+  "22824774",
+  "23304577",
+  "23326516",
+  "23691375",
+  "24019847",
+  "24066033",
+  "25233840",
+  "25885527",
+  "26008899",
+  "26136118",
+  "26539208",
+  "26567009",
+  "26734137",
+  "26770814",
+  "26956144",
+  "27081549",
+  "27099744",
+  "27573763",
+  "27656288"
+ ],
+ "grounding": {
+  "findings_returned": 98,
+  "quote_not_found": 0,
+  "quote_ungroundable": 1,
+  "grounded": 97,
+  "individuals": 14
+ },
+ "provenance": {
+  "n_assertions_checked": 62,
+  "supported": 62,
+  "support_rate": 1.0,
+  "unsupported_rate": 0.0,
+  "by_verdict": {
+   "supported": 62
+  }
+ },
+ "constraint_violations": {},
+ "metrics": {
+  "n_cases": 7,
+  "observed_exact": {
+   "micro": {
+    "tp": 17.0,
+    "fp": 29.0,
+    "fn": 19.0,
+    "precision": 0.3696,
+    "recall": 0.4722,
+    "f1": 0.4146
+   },
+   "macro_f1": 0.4008,
+   "f1_ci95": [
+    0.2712,
+    0.6087
+   ]
+  },
+  "observed_graded": {
+   "micro": {
+    "tp": 29.087,
+    "fp": 15.822,
+    "fn": 8.003,
+    "precision": 0.656,
+    "recall": 0.7777,
+    "f1": 0.7117
+   },
+   "macro_f1": 0.6986,
+   "f1_ci95": [
+    0.6235,
+    0.823
+   ]
+  },
+  "excluded_exact": {
+   "micro": {
+    "tp": 1.0,
+    "fp": 8.0,
+    "fn": 24.0,
+    "precision": 0.1111,
+    "recall": 0.04,
+    "f1": 0.0588
+   },
+   "macro_f1": 0.0952,
+   "f1_ci95": [
+    0.0,
+    0.24
+   ]
+  },
+  "gene_exact": {
+   "micro": {
+    "tp": 6.0,
+    "fp": 1.0,
+    "fn": 1.0,
+    "precision": 0.8571,
+    "recall": 0.8571,
+    "f1": 0.8571
+   },
+   "macro_f1": 0.8571,
+   "f1_ci95": [
+    0.5714,
+    1.0
+   ]
+  },
+  "disease_exact": {
+   "micro": {
+    "tp": 0.0,
+    "fp": 7.0,
+    "fn": 7.0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "macro_f1": 0.0,
+   "f1_ci95": [
+    0.0,
+    0.0
+   ]
+  },
+  "disease_normalised": {
+   "micro": {
+    "tp": 2.0,
+    "fp": 5.0,
+    "fn": 4.0,
+    "precision": 0.2857,
+    "recall": 0.3333,
+    "f1": 0.3077
+   },
+   "macro_f1": 0.2857,
+   "f1_ci95": [
+    0.0,
+    0.7143
+   ]
+  },
+  "profile_jaccard_mean": 0.5945,
+  "unprovenanced_assertions": 0,
+  "gold_observed_total": 36,
+  "pred_observed_total": 46,
+  "primary_metric": "observed_phenotype_graded_f1",
+  "primary_value": 0.7117
+ },
+ "metrics_first_individual": {
+  "n_cases": 7,
+  "observed_exact": {
+   "micro": {
+    "tp": 13.0,
+    "fp": 30.0,
+    "fn": 23.0,
+    "precision": 0.3023,
+    "recall": 0.3611,
+    "f1": 0.3291
+   },
+   "macro_f1": 0.3195,
+   "f1_ci95": [
+    0.2182,
+    0.4706
+   ]
+  },
+  "observed_graded": {
+   "micro": {
+    "tp": 24.385,
+    "fp": 18.227,
+    "fn": 12.003,
+    "precision": 0.5761,
+    "recall": 0.6666,
+    "f1": 0.6181
+   },
+   "macro_f1": 0.6025,
+   "f1_ci95": [
+    0.4607,
+    0.7551
+   ]
+  },
+  "excluded_exact": {
+   "micro": {
+    "tp": 1.0,
+    "fp": 6.0,
+    "fn": 24.0,
+    "precision": 0.1429,
+    "recall": 0.04,
+    "f1": 0.0625
+   },
+   "macro_f1": 0.0952,
+   "f1_ci95": [
+    0.0,
+    0.2609
+   ]
+  },
+  "gene_exact": {
+   "micro": {
+    "tp": 6.0,
+    "fp": 1.0,
+    "fn": 1.0,
+    "precision": 0.8571,
+    "recall": 0.8571,
+    "f1": 0.8571
+   },
+   "macro_f1": 0.8571,
+   "f1_ci95": [
+    0.5714,
+    1.0
+   ]
+  },
+  "disease_exact": {
+   "micro": {
+    "tp": 0.0,
+    "fp": 7.0,
+    "fn": 7.0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "macro_f1": 0.0,
+   "f1_ci95": [
+    0.0,
+    0.0
+   ]
+  },
+  "disease_normalised": {
+   "micro": {
+    "tp": 2.0,
+    "fp": 5.0,
+    "fn": 4.0,
+    "precision": 0.2857,
+    "recall": 0.3333,
+    "f1": 0.3077
+   },
+   "macro_f1": 0.2857,
+   "f1_ci95": [
+    0.0,
+    0.7143
+   ]
+  },
+  "profile_jaccard_mean": 0.5182,
+  "unprovenanced_assertions": 0,
+  "gold_observed_total": 36,
+  "pred_observed_total": 43,
+  "primary_metric": "observed_phenotype_graded_f1",
+  "primary_value": 0.6181
+ },
+ "multi_individual_papers": 2,
+ "per_paper": [
+  {
+   "pmid": "16103912",
+   "n_individuals_returned": 1,
+   "best_match_index": 0,
+   "pred_observed": 6,
+   "gold_observed": 4,
+   "pred_excluded": 1,
+   "observed_graded_f1_first": 0.8102,
+   "observed_graded_f1_best": 0.8102,
+   "gene_f1_best": 1.0
+  },
+  {
+   "pmid": "18682808",
+   "n_individuals_returned": 3,
+   "best_match_index": 0,
+   "pred_observed": 3,
+   "gold_observed": 2,
+   "pred_excluded": 0,
+   "observed_graded_f1_first": 0.5767,
+   "observed_graded_f1_best": 0.5767,
+   "gene_f1_best": 0.0
+  },
+  {
+   "pmid": "18828908",
+   "n_individuals_returned": 1,
+   "best_match_index": 0,
+   "pred_observed": 7,
+   "gold_observed": 6,
+   "pred_excluded": 1,
+   "observed_graded_f1_first": 0.6428,
+   "observed_graded_f1_best": 0.6428,
+   "gene_f1_best": 1.0
+  },
+  {
+   "pmid": "20461149",
+   "n_individuals_returned": 1,
+   "best_match_index": 0,
+   "pred_observed": 15,
+   "gold_observed": 9,
+   "pred_excluded": 4,
+   "observed_graded_f1_first": 0.6139,
+   "observed_graded_f1_best": 0.6139,
+   "gene_f1_best": 1.0
+  },
+  {
+   "pmid": "20676099",
+   "n_individuals_returned": 1,
+   "best_match_index": 0,
+   "pred_observed": 2,
+   "gold_observed": 4,
+   "pred_excluded": 0,
+   "observed_graded_f1_first": 0.5029,
+   "observed_graded_f1_best": 0.5029,
+   "gene_f1_best": 1.0
+  },
+  {
+   "pmid": "20839288",
+   "n_individuals_returned": 6,
+   "best_match_index": 1,
+   "pred_observed": 7,
+   "gold_observed": 6,
+   "pred_excluded": 2,
+   "observed_graded_f1_first": 0.2,
+   "observed_graded_f1_best": 0.8722,
+   "gene_f1_best": 1.0
+  },
+  {
+   "pmid": "21060763",
+   "n_individuals_returned": 1,
+   "best_match_index": 0,
+   "pred_observed": 6,
+   "gold_observed": 5,
+   "pred_excluded": 1,
+   "observed_graded_f1_first": 0.8713,
+   "observed_graded_f1_best": 0.8713,
+   "gene_f1_best": 1.0
+  }
+ ]
+}

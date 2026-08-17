@@ -21,7 +21,16 @@
      "10": 0.7326,
      "20": 0.7984
     },
-    "mrr": 0.5987
+    "mrr": 0.5987,
+    "n_papers_in_scope": 258,
+    "topk_recall_unconditional": {
+     "1": 0.5233,
+     "3": 0.6279,
+     "5": 0.686,
+     "10": 0.7326,
+     "20": 0.7984
+    },
+    "coverage": 1.0
    },
    "pipeline": {
     "n_scored": 258,
@@ -34,7 +43,16 @@
      "10": 0.5659,
      "20": 0.6589
     },
-    "mrr": 0.3451
+    "mrr": 0.3451,
+    "n_papers_in_scope": 258,
+    "topk_recall_unconditional": {
+     "1": 0.2287,
+     "3": 0.4109,
+     "5": 0.469,
+     "10": 0.5659,
+     "20": 0.6589
+    },
+    "coverage": 1.0
    }
   },
   "extraction_cost": {
@@ -44,6 +62,13 @@
    "top10_absolute_drop": 0.1667,
    "top20_absolute_drop": 0.1395,
    "mrr_drop": 0.2536
+  },
+  "extraction_cost_unconditional": {
+   "top1_absolute_drop": 0.2946,
+   "top3_absolute_drop": 0.217,
+   "top5_absolute_drop": 0.217,
+   "top10_absolute_drop": 0.1667,
+   "top20_absolute_drop": 0.1395
   }
  },
  "per_case": [
