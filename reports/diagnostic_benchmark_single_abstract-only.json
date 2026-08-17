@@ -1,0 +1,3922 @@
+{
+ "summary": {
+  "track": "single",
+  "mode": "abstract-only",
+  "n_papers": 258,
+  "top_k": [
+   1,
+   3,
+   5,
+   10,
+   20
+  ],
+  "conditions": {
+   "ceiling": {
+    "n_scored": 258,
+    "no_query": 0,
+    "unmappable_target": 3,
+    "topk_recall": {
+     "1": 0.5233,
+     "3": 0.6279,
+     "5": 0.686,
+     "10": 0.7326,
+     "20": 0.7984
+    },
+    "mrr": 0.5987
+   },
+   "pipeline": {
+    "n_scored": 233,
+    "no_query": 25,
+    "unmappable_target": 3,
+    "topk_recall": {
+     "1": 0.0815,
+     "3": 0.1717,
+     "5": 0.2318,
+     "10": 0.3305,
+     "20": 0.4249
+    },
+    "mrr": 0.1577
+   }
+  },
+  "extraction_cost": {
+   "top1_absolute_drop": 0.4418,
+   "top3_absolute_drop": 0.4562,
+   "top5_absolute_drop": 0.4542,
+   "top10_absolute_drop": 0.4021,
+   "top20_absolute_drop": 0.3735,
+   "mrr_drop": 0.441
+  }
+ },
+ "per_case": [
+  {
+   "pmid": "16103912",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012431"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "18682808",
+   "split": "dev",
+   "targets": [
+    "MONDO:0013446"
+   ],
+   "ceiling": {
+    "n_query": 2,
+    "rank": 70
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "18828908",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007732"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "19830075",
+   "split": "test",
+   "targets": [
+    "MONDO:0011338"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 2
+   }
+  },
+  {
+   "pmid": "19883511",
+   "split": "test",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 5
+   },
+   "pipeline": {
+    "n_query": 9,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "20371544",
+   "split": "test",
+   "targets": [
+    "MONDO:0014587"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "20461149",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007235"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 4
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "20839288",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012592"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 5
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 69
+   }
+  },
+  {
+   "pmid": "20937753",
+   "split": "test",
+   "targets": [
+    "MONDO:0008564"
+   ],
+   "ceiling": {
+    "n_query": 1,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "21060763",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008073"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "21165303",
+   "split": "test",
+   "targets": [
+    "MONDO:0007387"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 10,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "21677813",
+   "split": "dev",
+   "targets": [
+    "MONDO:0100082"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 16
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "21949523",
+   "split": "test",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 5
+   }
+  },
+  {
+   "pmid": "22508010",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009747"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "22539873",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007514"
+   ],
+   "ceiling": {
+    "n_query": 1,
+    "rank": 21
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 21
+   }
+  },
+  {
+   "pmid": "22701786",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009213"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 91
+   }
+  },
+  {
+   "pmid": "22824774",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009747"
+   ],
+   "ceiling": {
+    "n_query": 25,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "23304577",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007387"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 64
+   }
+  },
+  {
+   "pmid": "23326516",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014587"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 20
+   }
+  },
+  {
+   "pmid": "23691375",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008596"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "24019847",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007843"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "24066033",
+   "split": "dev",
+   "targets": [
+    "MONDO:0013446"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "24069336",
+   "split": "test",
+   "targets": [
+    "MONDO:0014078"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 4
+   }
+  },
+  {
+   "pmid": "24800029",
+   "split": "test",
+   "targets": [
+    "MONDO:0007265"
+   ],
+   "ceiling": {
+    "n_query": 19,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "24894789",
+   "split": "test",
+   "targets": [
+    "MONDO:0009747"
+   ],
+   "ceiling": {
+    "n_query": 18,
+    "rank": 7
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "24969041",
+   "split": "test",
+   "targets": [
+    "MONDO:0007868"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 12
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "24997722",
+   "split": "test",
+   "targets": [
+    "MONDO:0981022"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 86
+   }
+  },
+  {
+   "pmid": "25163805",
+   "split": "test",
+   "targets": [
+    "MONDO:0013897"
+   ],
+   "ceiling": {
+    "n_query": 23,
+    "rank": 4
+   },
+   "pipeline": {
+    "n_query": 10,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "25233840",
+   "split": "dev",
+   "targets": [
+    "MONDO:0975795"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 47
+   }
+  },
+  {
+   "pmid": "25469541",
+   "split": "test",
+   "targets": [
+    "MONDO:0010194"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 3
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 2
+   }
+  },
+  {
+   "pmid": "25758857",
+   "split": "test",
+   "targets": [
+    "MONDO:0975796"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 42
+   }
+  },
+  {
+   "pmid": "25849362",
+   "split": "test",
+   "targets": [
+    "MONDO:0011338"
+   ],
+   "ceiling": {
+    "n_query": 22,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 94
+   }
+  },
+  {
+   "pmid": "25852890",
+   "split": "test",
+   "targets": [
+    "MONDO:0009550"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 71
+   }
+  },
+  {
+   "pmid": "25870235",
+   "split": "test",
+   "targets": [
+    "MONDO:0979867"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "25885527",
+   "split": "dev",
+   "targets": [
+    "MONDO:0010466"
+   ],
+   "ceiling": {
+    "n_query": 46,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 13,
+    "rank": 8
+   }
+  },
+  {
+   "pmid": "25943428",
+   "split": "test",
+   "targets": [
+    "MONDO:0011987"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "26008899",
+   "split": "dev",
+   "targets": [
+    "MONDO:0957981"
+   ],
+   "ceiling": {
+    "n_query": 24,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 4
+   }
+  },
+  {
+   "pmid": "26078953",
+   "split": "test",
+   "targets": [
+    "MONDO:0014432"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 31
+   }
+  },
+  {
+   "pmid": "26136118",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009550"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "26539208",
+   "split": "dev",
+   "targets": [
+    "MONDO:0033549"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 16
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "26567009",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009499"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 3
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 12
+   }
+  },
+  {
+   "pmid": "26734137",
+   "split": "dev",
+   "targets": [
+    "MONDO:0020723"
+   ],
+   "ceiling": {
+    "n_query": 18,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 22
+   }
+  },
+  {
+   "pmid": "26770814",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007298"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 7
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "26915616",
+   "split": "test",
+   "targets": [
+    "MONDO:0007097"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "26956144",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012231"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 51
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 36
+   }
+  },
+  {
+   "pmid": "27081516",
+   "split": "test",
+   "targets": [
+    "MONDO:0009282"
+   ],
+   "ceiling": {
+    "n_query": 24,
+    "rank": 3
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 5
+   }
+  },
+  {
+   "pmid": "27081549",
+   "split": "dev",
+   "targets": [
+    "MONDO:0011493"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "27099744",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014198"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "27146836",
+   "split": "test",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 20
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 25
+   }
+  },
+  {
+   "pmid": "27247962",
+   "split": "test",
+   "targets": [
+    "MONDO:0011405"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 83
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "27330822",
+   "split": "test",
+   "targets": [
+    "MONDO:0008322"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "27573763",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007843"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "27648472",
+   "split": "test",
+   "targets": [
+    "MONDO:0980940"
+   ],
+   "ceiling": {
+    "n_query": 26,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "27652283",
+   "split": "test",
+   "targets": [
+    "MONDO:0007732"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "27656288",
+   "split": "dev",
+   "targets": [
+    "MONDO:0019568"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 23
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 18
+   }
+  },
+  {
+   "pmid": "27761245",
+   "split": "test",
+   "targets": [
+    "MONDO:0011488"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 96
+   }
+  },
+  {
+   "pmid": "27824329",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014606"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "27894351",
+   "split": "dev",
+   "targets": [
+    "MONDO:0975799"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "27900365",
+   "split": "test",
+   "targets": [
+    "MONDO:0009757"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 10,
+    "rank": 2
+   }
+  },
+  {
+   "pmid": "27977582",
+   "split": "test",
+   "targets": [
+    "MONDO:0007875"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28061825",
+   "split": "dev",
+   "targets": [
+    "MONDO:0011107"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 9
+   }
+  },
+  {
+   "pmid": "28163941",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "28289593",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009735"
+   ],
+   "ceiling": {
+    "n_query": 17,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28468610",
+   "split": "dev",
+   "targets": [
+    "MONDO:0011337"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 31
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28482824",
+   "split": "dev",
+   "targets": [
+    "MONDO:0010992"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 5
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28503313",
+   "split": "test",
+   "targets": [
+    "MONDO:0010035"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28540186",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014562"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 31
+   }
+  },
+  {
+   "pmid": "28569194",
+   "split": "test",
+   "targets": [
+    "MONDO:0009824"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "28584669",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008675"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28587322",
+   "split": "dev",
+   "targets": [
+    "MONDO:0010589"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28600779",
+   "split": "test",
+   "targets": [
+    "MONDO:0008795"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28611345",
+   "split": "dev",
+   "targets": [
+    "MONDO:0013889"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28679693",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 22
+   }
+  },
+  {
+   "pmid": "28821231",
+   "split": "test",
+   "targets": [
+    "MONDO:0009319"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 6
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 4
+   }
+  },
+  {
+   "pmid": "28841907",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007160"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "28946922",
+   "split": "dev",
+   "targets": [
+    "MONDO:0013889"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28966547",
+   "split": "test",
+   "targets": [
+    "MONDO:0013446"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 14
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "28966590",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012399"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 33
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "29050284",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008746"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "29051910",
+   "split": "test",
+   "targets": [
+    "MONDO:0012290"
+   ],
+   "ceiling": {
+    "n_query": 20,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 14
+   }
+  },
+  {
+   "pmid": "29053603",
+   "split": "test",
+   "targets": [
+    "MONDO:0013446"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 4
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "29078790",
+   "split": "test",
+   "targets": [
+    "MONDO:0008087"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 13
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "29110636",
+   "split": "dev",
+   "targets": [
+    "MONDO:0054581"
+   ],
+   "ceiling": {
+    "n_query": 19,
+    "rank": 4
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "29193763",
+   "split": "test",
+   "targets": [
+    "MONDO:0013446"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "29207168",
+   "split": "test",
+   "targets": [
+    "MONDO:0013889"
+   ],
+   "ceiling": {
+    "n_query": 2,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "29230214",
+   "split": "test",
+   "targets": [
+    "MONDO:0957535"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 35
+   }
+  },
+  {
+   "pmid": "29333303",
+   "split": "test",
+   "targets": [
+    "MONDO:0010010"
+   ],
+   "ceiling": {
+    "n_query": 26,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "29482508",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007606"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 2
+   }
+  },
+  {
+   "pmid": "29484404",
+   "split": "test",
+   "targets": [
+    "MONDO:0007533"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 13
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 4
+   }
+  },
+  {
+   "pmid": "29491316",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007669"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 5
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "29537367",
+   "split": "dev",
+   "targets": [
+    "MONDO:0976229"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 7
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "29569962",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008073"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 2
+   }
+  },
+  {
+   "pmid": "29644084",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012106"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "29742735",
+   "split": "dev",
+   "targets": [
+    "MONDO:0013522"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 28
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 78
+   }
+  },
+  {
+   "pmid": "29749493",
+   "split": "test",
+   "targets": [
+    "MONDO:0008980"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "29801479",
+   "split": "test",
+   "targets": [
+    "MONDO:0012592"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 13
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 21
+   }
+  },
+  {
+   "pmid": "29914387",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007843"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30012084",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014086"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 4
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30034812",
+   "split": "test",
+   "targets": [
+    "MONDO:0700385"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 58
+   }
+  },
+  {
+   "pmid": "30046498",
+   "split": "test",
+   "targets": [
+    "MONDO:0016862"
+   ],
+   "ceiling": {
+    "n_query": 19,
+    "rank": 15
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 5
+   }
+  },
+  {
+   "pmid": "30050362",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009229"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 58
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30057544",
+   "split": "dev",
+   "targets": [
+    "MONDO:0011408"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 15
+   }
+  },
+  {
+   "pmid": "30083032",
+   "split": "test",
+   "targets": [
+    "MONDO:0008564"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 19
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 25
+   }
+  },
+  {
+   "pmid": "30095615",
+   "split": "test",
+   "targets": [
+    "MONDO:0007362"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 11
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30104866",
+   "split": "test",
+   "targets": [
+    "MONDO:0011743"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30113454",
+   "split": "dev",
+   "targets": [
+    "MONDO:0019570"
+   ],
+   "ceiling": {
+    "n_query": 19,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30147916",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007363"
+   ],
+   "ceiling": {
+    "n_query": 2,
+    "rank": 4
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 16
+   }
+  },
+  {
+   "pmid": "30208878",
+   "split": "test",
+   "targets": [
+    "MONDO:0018931"
+   ],
+   "ceiling": {
+    "n_query": 22,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "30243293",
+   "split": "test",
+   "targets": [
+    "MONDO:0008055"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "30246735",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007387"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 3
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30249237",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008795"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 31
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 12
+   }
+  },
+  {
+   "pmid": "30296944",
+   "split": "test",
+   "targets": [
+    "MONDO:0011484"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 24
+   },
+   "pipeline": {
+    "n_query": 9,
+    "rank": 5
+   }
+  },
+  {
+   "pmid": "30364145",
+   "split": "test",
+   "targets": [
+    "MONDO:0044319"
+   ],
+   "ceiling": {
+    "n_query": 21,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30400883",
+   "split": "dev",
+   "targets": [
+    "MONDO:0010305"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 4
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30498080",
+   "split": "test",
+   "targets": [
+    "MONDO:0970993"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 11
+   }
+  },
+  {
+   "pmid": "30509212",
+   "split": "test",
+   "targets": [
+    "MONDO:0010465"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30517146",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008070"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 31
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 14
+   }
+  },
+  {
+   "pmid": "30538526",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007732"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30568144",
+   "split": "dev",
+   "targets": [
+    "MONDO:0010196"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30622101",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014358"
+   ],
+   "ceiling": {
+    "n_query": 18,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30622725",
+   "split": "test",
+   "targets": [
+    "MONDO:0013889"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30631761",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014017"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 4
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30658709",
+   "split": "test",
+   "targets": [
+    "MONDO:0014381"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "30681580",
+   "split": "dev",
+   "targets": [
+    "MONDO:0007793"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 7
+   }
+  },
+  {
+   "pmid": "30701076",
+   "split": "test",
+   "targets": [
+    "MONDO:0012212"
+   ],
+   "ceiling": {
+    "n_query": 18,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 83
+   }
+  },
+  {
+   "pmid": "30759870",
+   "split": "test",
+   "targets": [
+    "MONDO:0054813"
+   ],
+   "ceiling": {
+    "n_query": 24,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 5
+   }
+  },
+  {
+   "pmid": "30804983",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014198"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "30808312",
+   "split": "dev",
+   "targets": [
+    "MONDO:0024530"
+   ],
+   "ceiling": {
+    "n_query": 24,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "30847200",
+   "split": "dev",
+   "targets": [
+    "MONDO:0013651"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 22
+   }
+  },
+  {
+   "pmid": "30847374",
+   "split": "test",
+   "targets": [
+    "MONDO:0957876"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 21
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 74
+   }
+  },
+  {
+   "pmid": "30855487",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012322"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "30891318",
+   "split": "test",
+   "targets": [
+    "MONDO:0010196"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "30936877",
+   "split": "test",
+   "targets": [
+    "MONDO:0957981"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 2
+   }
+  },
+  {
+   "pmid": "31044565",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009213"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 91
+   }
+  },
+  {
+   "pmid": "31068971",
+   "split": "test",
+   "targets": [
+    "MONDO:0013016"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 18
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "31182893",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014358"
+   ],
+   "ceiling": {
+    "n_query": 19,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": 15
+   }
+  },
+  {
+   "pmid": "31213928",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008045"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 10
+   }
+  },
+  {
+   "pmid": "31251474",
+   "split": "test",
+   "targets": [
+    "MONDO:0013875"
+   ],
+   "ceiling": {
+    "n_query": 19,
+    "rank": 7
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 37
+   }
+  },
+  {
+   "pmid": "31279336",
+   "split": "test",
+   "targets": [
+    "MONDO:0014611"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "31347273",
+   "split": "test",
+   "targets": [
+    "MONDO:0014606"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "31392109",
+   "split": "test",
+   "targets": [
+    "MONDO:0011614"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 2
+   }
+  },
+  {
+   "pmid": "31475485",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012212"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 16
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 83
+   }
+  },
+  {
+   "pmid": "31590245",
+   "split": "test",
+   "targets": [
+    "MONDO:0011001"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 46
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 7
+   }
+  },
+  {
+   "pmid": "31597564",
+   "split": "test",
+   "targets": [
+    "MONDO:0011614"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 11
+   }
+  },
+  {
+   "pmid": "31636267",
+   "split": "test",
+   "targets": [
+    "MONDO:0033557"
+   ],
+   "ceiling": {
+    "n_query": 26,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 29
+   }
+  },
+  {
+   "pmid": "31774634",
+   "split": "test",
+   "targets": [
+    "MONDO:0014831"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "31985809",
+   "split": "test",
+   "targets": [
+    "MONDO:0970952"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 18
+   }
+  },
+  {
+   "pmid": "32047208",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014328"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "32309624",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014017"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": 24
+   }
+  },
+  {
+   "pmid": "32325141",
+   "split": "dev",
+   "targets": [
+    "MONDO:0958017"
+   ],
+   "ceiling": {
+    "n_query": 23,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "32528524",
+   "split": "test",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 5
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "32600459",
+   "split": "dev",
+   "targets": [
+    "MONDO:0033549"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 55
+   }
+  },
+  {
+   "pmid": "32631816",
+   "split": "dev",
+   "targets": [
+    "MONDO:0958205"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 51
+   }
+  },
+  {
+   "pmid": "32851297",
+   "split": "test",
+   "targets": [
+    "MONDO:0011614"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 38
+   }
+  },
+  {
+   "pmid": "32869508",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009550"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "33209733",
+   "split": "test",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 15
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "33452875",
+   "split": "test",
+   "targets": [
+    "MONDO:0009735"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "33534181",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009735"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "33807164",
+   "split": "dev",
+   "targets": [
+    "MONDO:0958335"
+   ],
+   "ceiling": {
+    "n_query": 18,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 97
+   }
+  },
+  {
+   "pmid": "33884299",
+   "split": "test",
+   "targets": [
+    "MONDO:0008038"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 28
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "33897766",
+   "split": "dev",
+   "targets": [
+    "MONDO:0980701"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 9
+   }
+  },
+  {
+   "pmid": "33898683",
+   "split": "test",
+   "targets": [
+    "MONDO:0100082"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 3
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "33949776",
+   "split": "dev",
+   "targets": [
+    "MONDO:0979243"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 8
+   }
+  },
+  {
+   "pmid": "33958584",
+   "split": "dev",
+   "targets": [
+    "MONDO:0060642"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "34035203",
+   "split": "test",
+   "targets": [
+    "MONDO:0009747"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "34073322",
+   "split": "test",
+   "targets": [
+    "MONDO:0014358"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 10,
+    "rank": 63
+   }
+  },
+  {
+   "pmid": "34133408",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014606"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "34189097",
+   "split": "test",
+   "targets": [
+    "MONDO:0010589"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 24
+   }
+  },
+  {
+   "pmid": "34206215",
+   "split": "test",
+   "targets": [
+    "MONDO:0014606"
+   ],
+   "ceiling": {
+    "n_query": 28,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 12,
+    "rank": 17
+   }
+  },
+  {
+   "pmid": "34215294",
+   "split": "test",
+   "targets": [
+    "MONDO:0014606"
+   ],
+   "ceiling": {
+    "n_query": 19,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "34354969",
+   "split": "test",
+   "targets": [
+    "MONDO:0010524"
+   ],
+   "ceiling": {
+    "n_query": 20,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "34552798",
+   "split": "dev",
+   "targets": [
+    "MONDO:0100082"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 7
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 8
+   }
+  },
+  {
+   "pmid": "34641913",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012400"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 28
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 95
+   }
+  },
+  {
+   "pmid": "34746378",
+   "split": "dev",
+   "targets": [
+    "MONDO:0011451"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "34888090",
+   "split": "test",
+   "targets": [
+    "MONDO:0009735"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 5
+   }
+  },
+  {
+   "pmid": "34904096",
+   "split": "test",
+   "targets": [
+    "MONDO:0008073"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "34974531",
+   "split": "test",
+   "targets": [
+    "MONDO:0975799"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "35003478",
+   "split": "test",
+   "targets": [
+    "MONDO:0012212"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 35
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 20
+   }
+  },
+  {
+   "pmid": "35137569",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014591"
+   ],
+   "ceiling": {
+    "n_query": 11,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "35386260",
+   "split": "dev",
+   "targets": [
+    "MONDO:0958231"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "35451551",
+   "split": "test",
+   "targets": [
+    "MONDO:0958000"
+   ],
+   "ceiling": {
+    "n_query": 22,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "35479066",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014810"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 49
+   }
+  },
+  {
+   "pmid": "35566429",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014810"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 45
+   }
+  },
+  {
+   "pmid": "35637269",
+   "split": "dev",
+   "targets": [
+    "MONDO:0976261"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 26
+   }
+  },
+  {
+   "pmid": "35668506",
+   "split": "test",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 18,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 12,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "35812385",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012650"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 80
+   }
+  },
+  {
+   "pmid": "35873489",
+   "split": "test",
+   "targets": [
+    "MONDO:0976269"
+   ],
+   "ceiling": {
+    "n_query": 30,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "35883096",
+   "split": "test",
+   "targets": [
+    "MONDO:0009756"
+   ],
+   "ceiling": {
+    "n_query": 19,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": 64
+   }
+  },
+  {
+   "pmid": "35933355",
+   "split": "test",
+   "targets": [
+    "MONDO:0957795"
+   ],
+   "ceiling": {
+    "n_query": 2,
+    "rank": 64
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36147795",
+   "split": "test",
+   "targets": [
+    "MONDO:0010726"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36157999",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014358"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 7
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36213268",
+   "split": "test",
+   "targets": [
+    "MONDO:0008057"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36229627",
+   "split": "dev",
+   "targets": [
+    "MONDO:0971011"
+   ],
+   "ceiling": {
+    "n_query": 2,
+    "rank": 6
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36273129",
+   "split": "test",
+   "targets": [
+    "MONDO:0014823"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 9,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "36282599",
+   "split": "test",
+   "targets": [
+    "MONDO:0957953"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36299998",
+   "split": "test",
+   "targets": [
+    "MONDO:0957953"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36316122",
+   "split": "test",
+   "targets": [
+    "MONDO:0976134"
+   ],
+   "ceiling": {
+    "n_query": 20,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 8
+   }
+  },
+  {
+   "pmid": "36328362",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 6
+   },
+   "pipeline": {
+    "n_query": 10,
+    "rank": 16
+   }
+  },
+  {
+   "pmid": "36420349",
+   "split": "test",
+   "targets": [
+    "MONDO:0012613"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 10,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36447687",
+   "split": "test",
+   "targets": [
+    "MONDO:0980940"
+   ],
+   "ceiling": {
+    "n_query": 18,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36463227",
+   "split": "test",
+   "targets": [
+    "MONDO:0012981"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": 12
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "36540882",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014936"
+   ],
+   "ceiling": {
+    "n_query": 22,
+    "rank": 98
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "36544606",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008104"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 9
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 15
+   }
+  },
+  {
+   "pmid": "36595822",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012818"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 7
+   }
+  },
+  {
+   "pmid": "36606057",
+   "split": "dev",
+   "targets": [
+    "MONDO:0008073"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 35
+   }
+  },
+  {
+   "pmid": "36731504",
+   "split": "test",
+   "targets": [
+    "MONDO:0014017"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 12
+   }
+  },
+  {
+   "pmid": "36777730",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014791"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 2
+   }
+  },
+  {
+   "pmid": "36779064",
+   "split": "test",
+   "targets": [
+    "MONDO:0958234"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 100
+   }
+  },
+  {
+   "pmid": "36927955",
+   "split": "dev",
+   "targets": [
+    "MONDO:0957919"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 4
+   }
+  },
+  {
+   "pmid": "36981010",
+   "split": "test",
+   "targets": [
+    "MONDO:0014936"
+   ],
+   "ceiling": {
+    "n_query": 17,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "37025455",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014791"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 7
+   }
+  },
+  {
+   "pmid": "37057295",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014936"
+   ],
+   "ceiling": {
+    "n_query": 25,
+    "rank": 4
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "37065631",
+   "split": "dev",
+   "targets": [
+    "MONDO:0980938"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "37260585",
+   "split": "test",
+   "targets": [
+    "MONDO:0100082"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "37476413",
+   "split": "test",
+   "targets": [
+    "MONDO:0014936"
+   ],
+   "ceiling": {
+    "n_query": 27,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "37488749",
+   "split": "test",
+   "targets": [
+    "MONDO:0014936"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "37628710",
+   "split": "dev",
+   "targets": [
+    "MONDO:0980722"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "37684057",
+   "split": "dev",
+   "targets": [
+    "MONDO:0032755"
+   ],
+   "ceiling": {
+    "n_query": 22,
+    "rank": null
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "37771582",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014810"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 54
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 15
+   }
+  },
+  {
+   "pmid": "37845262",
+   "split": "test",
+   "targets": [
+    "MONDO:0014831"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 9,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "37958557",
+   "split": "test",
+   "targets": [
+    "MONDO:0980751"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "38013430",
+   "split": "test",
+   "targets": [
+    "MONDO:0970943"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "38025195",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009735"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": 4
+   }
+  },
+  {
+   "pmid": "38083972",
+   "split": "test",
+   "targets": [
+    "MONDO:0976263"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 98
+   }
+  },
+  {
+   "pmid": "38566089",
+   "split": "test",
+   "targets": [
+    "MONDO:0014936"
+   ],
+   "ceiling": {
+    "n_query": 15,
+    "rank": 80
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "38572164",
+   "split": "test",
+   "targets": [
+    "MONDO:0019567"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 32
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "38573307",
+   "split": "test",
+   "targets": [
+    "MONDO:0970943"
+   ],
+   "ceiling": {
+    "n_query": 4,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": 60
+   }
+  },
+  {
+   "pmid": "38592547",
+   "split": "test",
+   "targets": [
+    "MONDO:0700301"
+   ],
+   "ceiling": {
+    "n_query": 28,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "38622837",
+   "split": "dev",
+   "targets": [
+    "MONDO:0976261"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 10
+   }
+  },
+  {
+   "pmid": "38652464",
+   "split": "test",
+   "targets": [
+    "MONDO:0700338"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "38655005",
+   "split": "dev",
+   "targets": [
+    "MONDO:0979237"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 3
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 19
+   }
+  },
+  {
+   "pmid": "38982897",
+   "split": "dev",
+   "targets": [
+    "MONDO:0011531"
+   ],
+   "ceiling": {
+    "n_query": 3,
+    "rank": 7
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "39036217",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009735"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "39038237",
+   "split": "dev",
+   "targets": [
+    "MONDO:0976285"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "39050568",
+   "split": "test",
+   "targets": [
+    "MONDO:0008057"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 3
+   }
+  },
+  {
+   "pmid": "39101447",
+   "split": "test",
+   "targets": [
+    "MONDO:0014533"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 34
+   },
+   "pipeline": {
+    "n_query": 10,
+    "rank": 12
+   }
+  },
+  {
+   "pmid": "39135939",
+   "split": "test",
+   "targets": [
+    "MONDO:0014891"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 10,
+    "rank": 22
+   }
+  },
+  {
+   "pmid": "39143735",
+   "split": "test",
+   "targets": [
+    "MONDO:0011614"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 17
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 25
+   }
+  },
+  {
+   "pmid": "39170644",
+   "split": "dev",
+   "targets": [
+    "MONDO:0013820"
+   ],
+   "ceiling": {
+    "n_query": 14,
+    "rank": 55
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "39188477",
+   "split": "test",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 7,
+    "rank": 5
+   }
+  },
+  {
+   "pmid": "39220787",
+   "split": "test",
+   "targets": [
+    "MONDO:0009274"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 2
+   }
+  },
+  {
+   "pmid": "39289723",
+   "split": "dev",
+   "targets": [
+    "MONDO:0012427"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 3,
+    "rank": 24
+   }
+  },
+  {
+   "pmid": "39314582",
+   "split": "test",
+   "targets": [
+    "MONDO:0010518"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 12,
+    "rank": 13
+   }
+  },
+  {
+   "pmid": "39416860",
+   "split": "test",
+   "targets": [
+    "MONDO:0014533"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 68
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 59
+   }
+  },
+  {
+   "pmid": "39420558",
+   "split": "test",
+   "targets": [
+    "MONDO:0978294"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 5,
+    "rank": 22
+   }
+  },
+  {
+   "pmid": "39507621",
+   "split": "dev",
+   "targets": [
+    "MONDO:0014533"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": 43
+   },
+   "pipeline": {
+    "n_query": 9,
+    "rank": 17
+   }
+  },
+  {
+   "pmid": "39810750",
+   "split": "test",
+   "targets": [
+    "MONDO:0976236"
+   ],
+   "ceiling": {
+    "n_query": 5,
+    "rank": 5
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 62
+   }
+  },
+  {
+   "pmid": "39917307",
+   "split": "test",
+   "targets": [
+    "MONDO:0010518"
+   ],
+   "ceiling": {
+    "n_query": 7,
+    "rank": 2
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 6
+   }
+  },
+  {
+   "pmid": "40232843",
+   "split": "dev",
+   "targets": [
+    "MONDO:0979241"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "40607310",
+   "split": "test",
+   "targets": [
+    "MONDO:0009735"
+   ],
+   "ceiling": {
+    "n_query": 13,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 6,
+    "rank": 7
+   }
+  },
+  {
+   "pmid": "40924475",
+   "split": "dev",
+   "targets": [
+    "MONDO:0980987"
+   ],
+   "ceiling": {
+    "n_query": 12,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 0,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "41000458",
+   "split": "test",
+   "targets": [
+    "MONDO:0980966"
+   ],
+   "ceiling": {
+    "n_query": 8,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "41306646",
+   "split": "dev",
+   "targets": [
+    "MONDO:0011706"
+   ],
+   "ceiling": {
+    "n_query": 16,
+    "rank": 67
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 62
+   }
+  },
+  {
+   "pmid": "41488893",
+   "split": "test",
+   "targets": [
+    "MONDO:0014369"
+   ],
+   "ceiling": {
+    "n_query": 10,
+    "rank": 3
+   },
+   "pipeline": {
+    "n_query": 2,
+    "rank": 64
+   }
+  },
+  {
+   "pmid": "41694855",
+   "split": "dev",
+   "targets": [
+    "MONDO:0009267"
+   ],
+   "ceiling": {
+    "n_query": 9,
+    "rank": 55
+   },
+   "pipeline": {
+    "n_query": 4,
+    "rank": 43
+   }
+  },
+  {
+   "pmid": "41757399",
+   "split": "dev",
+   "targets": [
+    "MONDO:0010518"
+   ],
+   "ceiling": {
+    "n_query": 23,
+    "rank": 1
+   },
+   "pipeline": {
+    "n_query": 9,
+    "rank": 1
+   }
+  },
+  {
+   "pmid": "41810194",
+   "split": "dev",
+   "targets": [
+    "MONDO:0010726"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 12
+   },
+   "pipeline": {
+    "n_query": 1,
+    "rank": null
+   }
+  },
+  {
+   "pmid": "41928123",
+   "split": "dev",
+   "targets": [
+    "MONDO:0010518"
+   ],
+   "ceiling": {
+    "n_query": 6,
+    "rank": 7
+   },
+   "pipeline": {
+    "n_query": 8,
+    "rank": 5
+   }
+  }
+ ]
+}

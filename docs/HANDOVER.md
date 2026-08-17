@@ -142,6 +142,13 @@ from that tier must be flagged as having no negative-finding data. F1 0.0089 is 
 weakness: abstracts report what was found, never what was ruled out. Publishing those records
 unflagged would let a consumer read "absent from the record" as "reported absent".
 
+Downstream, on diagnostic ranking (`reports/diagnostic_benchmark_single_abstract-only.json`),
+retention is sharply k-dependent: abstract-only keeps **64% of full-text top-20** recall but
+only **36% of top-1** (top-20 0.425 vs 0.659; top-1 0.082 vs 0.229). So the tier supports
+*candidate shortlisting*, not top-1 diagnosis. And 25 of 258 papers (10%) produced no
+groundable phenotype from the abstract at all, a hard failure F1 hides because it aggregates
+only over papers that produced output.
+
 Full-text access to that tier (a legal question, see `docs/LICENSING.md`) would roughly
 double usable coverage: ~4,100 to ~10,400 gold cases.
 

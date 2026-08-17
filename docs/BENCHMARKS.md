@@ -298,10 +298,44 @@ an explicit flag that its negative findings are missing rather than negative, or
 will read "not present in the record" as "reported absent". That distinction is the entire
 point of modelling `excluded` as a positive assertion.
 
+### Does abstract-tier phenotype data still help diagnosis?
+
+F1 says half the phenotype signal survives. The question that actually decides shipping is
+whether that half still ranks the right disease. `make diagnostic-abstract`, same 258 papers,
+same ranker, same ceiling:
+
+| Condition | top-1 | top-3 | top-5 | top-10 | top-20 | MRR |
+|---|---|---|---|---|---|---|
+| Ceiling (gold phenotypes) | 0.523 | 0.628 | 0.686 | 0.733 | 0.798 | 0.599 |
+| Pipeline, full text | 0.229 | 0.411 | 0.469 | 0.566 | 0.659 | 0.345 |
+| Pipeline, abstract only | 0.082 | 0.172 | 0.232 | 0.331 | 0.425 | 0.158 |
+
+**Retention of full-text performance is strongly k-dependent:**
+
+| | top-1 | top-10 | top-20 | MRR |
+|---|---|---|---|---|
+| Abstract-only as a share of full-text | **36%** | 58% | **64%** | 46% |
+
+**Abstract-tier data shortlists but does not pinpoint.** It keeps 64% of full-text top-20
+recall and only 36% of top-1. Fewer phenotypes still narrow the candidate set usefully, but
+not enough to rank one disease first. So the honest framing of what this tier supports is
+*candidate generation*, not *diagnosis*: the right answer is in the top 20 for 4 cases in 10,
+against 6.6 in 10 with full text and 8 in 10 with expert phenotypes.
+
+**A 10% hard-failure rate that F1 hides.** Only **233 of 258** abstract-only papers produced
+a query at all: 25 papers yielded no groundable phenotype from the abstract, so they cannot be
+ranked at any k. F1 aggregates over papers that produced output and never shows this; the
+per-condition `no_query` count in the report does.
+
 **Verdict: abstract-tier extraction is worth shipping**, with per-field expectations set
-honestly. It delivers full-quality gene and diagnosis data plus roughly half the phenotype
-signal for 1,086 papers otherwise contributing nothing. It must not be published as though
-it were equivalent to full-text extraction, and it must not be scored in the same pool.
+honestly. It delivers full-quality gene and diagnosis data, roughly half the phenotype signal,
+and 64% of full-text top-20 diagnostic retention, for 1,086 papers otherwise contributing
+nothing. Three conditions on publishing it:
+
+1. Records carry their tier, and are not scored in the same pool as full-text records.
+2. Absent findings are flagged as **missing, not negative** (F1 0.0089 is absence).
+3. The tier is described as supporting candidate shortlisting, not top-1 diagnosis, and
+   ~10% of its records will have no phenotypes at all.
 
 ## 8. What no benchmark here measures
 

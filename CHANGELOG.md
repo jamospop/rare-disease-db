@@ -44,6 +44,8 @@ QA suite, diagnostic benchmark, release builder, read API + UI. 47 offline tests
 - `make llm-dev` / `llm-dev-dry` / `llm-dev-batch`: the go/no-go run, with cost estimate
   ($13.57 sync, $6.78 batched) and `.env` support so no key touches shell history.
 - `make diagnostic-abstract`: the same ceiling/pipeline benchmark on abstract-only input.
+  Result: abstract-only keeps 64% of full-text top-20 recall but only 36% of top-1, so the
+  tier shortlists rather than diagnoses; 10% of its papers yield no phenotypes at all.
 - Apache-2.0 `LICENSE` and `LICENSE-DATA`; personal email replaced with a placeholder and a
   warning; `FILES.md` + a self-checking manifest generator; em dashes removed from prose.
 
