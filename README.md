@@ -19,8 +19,9 @@ corpus-scale extraction pass has not been run. Every number below was produced b
 
 ## Use it
 
-**[Search published cases by a patient's findings](https://claude.ai/code/artifact/e15b5657-7db4-4741-863f-7b25402e6b78)**
+**[Search 3,045 published cases by a patient's findings or by gene](https://claude.ai/code/artifact/e15b5657-7db4-4741-863f-7b25402e6b78)**
 - one self-contained page, no install, no server, nothing you type leaves the browser.
+**2,414 of those cases are in no curated database.**
 Enter clinical findings, get published case reports whose recorded features overlap, what
 those cases turned out to be, and a citation for every one. Rare findings are weighted far
 above common ones, so a shared unusual feature counts for much more than a shared common one.
@@ -42,7 +43,7 @@ Rebuild it yourself: `make search-page` writes `dist/case-search.html`.
 | LLM extractor (`rdcd/extract/llm.py`) | Written, **not executed live**: see Limitations |
 | QA: provenance verification, ontology constraints, consensus, retractions (`rdcd/qa/`) | Working |
 | Phenotype-driven diagnostic ranker + ceiling/pipeline benchmark (`rdcd/eval/diagnose.py`) | Working |
-| Net-new corpus pass over never-curated papers (`scripts/build_corpus.py`) | Working |
+| Net-new corpus pass over never-curated papers (`scripts/build_corpus.py`) | **2,605 cases from 2,599 papers**, zero gold-set overlap |
 | Case-similarity search + self-contained search page | Working |
 | Full corpus-scale run (442k open-access case reports) | Not built |
 

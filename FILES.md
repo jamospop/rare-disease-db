@@ -13,17 +13,17 @@ Every file, what it is, and how big. Generated - do not edit by hand:
 | `LICENSE` | 202 | Apache License 2.0 - covers the code. |
 | `LICENSE-DATA` | 37 | CC BY 4.0 for extracted data, plus what the licences do not cover. |
 | `Makefile` | 146 | All entry points. `make reproduce` regenerates every published number. |
-| `README.md` | 224 | Front page: what this is, headline numbers, limitations. The 'only ambassador'. |
+| `README.md` | 225 | Front page: what this is, headline numbers, limitations. The 'only ambassador'. |
 | `requirements.txt` | 11 | pydantic, requests, lxml (core); anthropic (LLM path only); pytest. |
 
 ## Documentation (`docs/`)
 
 | File | Lines | Purpose |
 |---|---:|---|
-| `docs/BENCHMARKS.md` | 439 | Metric definitions, full results, 3 ablations, QA audit, diagnostic benchmark. |
+| `docs/BENCHMARKS.md` | 467 | Metric definitions, full results, 3 ablations, QA audit, diagnostic benchmark. |
 | `docs/DECISIONS.md` | 320 | 21 design decisions, each with alternative and cost. D21 = the big fix. |
 | `docs/ERROR_LEDGER.md` | 193 | 10 of our error classes + 4 gold-data error classes, with measured rates. |
-| `docs/HANDOVER.md` | 326 | Start here. Build record, all 8 findings with numbers, next actions, traps. |
+| `docs/HANDOVER.md` | 328 | Start here. Build record, all 8 findings with numbers, next actions, traps. |
 | `docs/LICENSING.md` | 107 | What we read, what we publish, per-tier rules, and what a lawyer might have won. |
 | `docs/REPRODUCE.md` | 101 | Reproducing every number, determinism guarantees, common failures. |
 | `docs/REQUIREMENTS.md` | 134 | §1 requirements proven by measurement; §2 literature synthesis NOT done. |
@@ -70,7 +70,7 @@ Every file, what it is, and how big. Generated - do not edit by hand:
 | `scripts/audit_goldset.py` | 57 | The licence/retraction audit -> goldset_availability.json. |
 | `scripts/build_corpus.py` | 165 | Extracts cases from never-curated open-access case reports. |
 | `scripts/build_release.py` | 200 | Versioned release: JSONL + phenopackets + datasheet + SHA256SUMS. |
-| `scripts/build_static_search.py` | 398 | Exports the corpus as one offline, self-contained search page. |
+| `scripts/build_static_search.py` | 408 | Exports the corpus as one offline, self-contained search page. |
 | `scripts/check_quotes.py` | 49 | Verifies every quote is verbatim; consults no gold data. |
 | `scripts/fetch_eval_fulltext.py` | 45 | Warms the full-text cache so scoring is offline. |
 | `scripts/gen_manifest.py` | 204 | Regenerates FILES.md from disk. |

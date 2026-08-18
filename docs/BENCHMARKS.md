@@ -427,7 +427,35 @@ extractor in this configuration. This is the most useful negative result here.
 
 `make llm-dev` remains the real run: 129 papers, fresh context each, strict schema, ~$13.57.
 
-## 9. What no benchmark here measures
+## 9. The net-new corpus
+
+Everything above measures extraction against papers experts already curated. This is the
+first pass over papers nobody has: `make corpus`, 43 minutes, 3,019 candidates scanned.
+
+| | |
+|---|---|
+| Cases extracted | **2,605** from 2,599 distinct papers |
+| Assertions | 38,280 |
+| Overlap with the curated gold set | **0** (excluded by construction, verified after) |
+| Licence mix | CC BY 1,205 / CC BY-NC-ND 760 / CC BY-NC 494 / other 146 |
+| Years | 2012-2026, ~200/year since 2021 |
+| Rejected: no body text | 321 |
+| Rejected: already curated | 16 |
+| Rejected: looks like a review | 11 |
+| Retracted, flagged not deleted | 1 |
+
+**43% of these cases carry an error-severity QA flag**, almost all
+`polarity_contradiction`: the baseline emits one record per document, so a finding present
+in patient 1 and absent in patient 2 collapses into a self-contradicting subject. The
+records are still published, because the citation is real and a reader can check it, but
+every affected case is **marked as self-contradictory in the search page**. Publishing them
+silently would be the dishonest option; withholding them would discard real citations over a
+known, disclosed limitation.
+
+This is also the strongest argument yet for individual segmentation: it is no longer an
+abstract 1,262 flags on a benchmark, it is 43% of a corpus people can search.
+
+## 10. What no benchmark here measures
 
 - **LLM extractor accuracy via the API path.** Still no live API call. §8 is a 7-paper
   pilot through a different transport, with the validity threats listed there.

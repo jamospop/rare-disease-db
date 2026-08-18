@@ -240,7 +240,9 @@ already curated by experts. Useful for measuring extraction, worth **nothing** t
 looking something up: the information was already structured somewhere.
 
 `scripts/build_corpus.py` targets the other ~442,000 open-access case reports in PMC and
-excludes every gold-set paper by construction, so its output is net-new. Two quality lessons
+excludes every gold-set paper by construction, so its output is net-new. **First pass:
+2,605 cases from 2,599 papers, 38,280 assertions, 43 minutes, zero gold-set overlap** (the
+exclusion was verified afterwards rather than assumed). Two quality lessons
 from the first pass:
 
 - **The first query was too loose.** `"case reports"[pt]` in PMC still returned reviews,

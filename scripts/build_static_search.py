@@ -99,6 +99,7 @@ def main() -> None:
             "g": [v["gene"]["label"] for v in (r.get("variants") or []) if v.get("gene")][:3],
             "o": 1 if r.get("_origin") == "never-curated" else 0,
             "r": 1 if src.get("retracted") else 0,
+            "q": 1 if any(f.startswith("error:") for f in (r.get("qa_flags") or [])) else 0,
         })
 
     # Searchable term list for the autocomplete: only terms cases actually have.
@@ -114,8 +115,12 @@ def main() -> None:
             genes.setdefault(g.upper(), []).append(i)
     print(f"  {len(genes)} distinct genes indexed")
 
+    flagged = sum(c["q"] for c in cases)
+    print(f"  {flagged} of {len(cases)} cases ({flagged/max(1,len(cases)):.0%}) "
+          f"carry a contradictory-record flag")
     data = {"labels": labels, "ic": ic, "anc": anc, "cases": cases,
-            "terms": searchable, "genes": genes}
+            "terms": searchable, "genes": genes,
+            "flagged": flagged}
     blob = json.dumps(data, separators=(",", ":"))
     print(f"  payload {len(blob)/1e6:.2f} MB raw, {len(gzip.compress(blob.encode()))/1e6:.2f} MB gzipped")
 
@@ -233,6 +238,7 @@ h2{font-family:ui-serif,Georgia,serif;font-size:17px;font-weight:600;
 .tag{padding:1px 6px;border:1px solid var(--line-2);border-radius:3px;letter-spacing:.02em}
 .tag.new{color:var(--accent-ink);border-color:var(--accent);background:var(--accent-soft)}
 .tag.ret{color:var(--caution);border-color:var(--caution-line);background:var(--caution-bg)}
+.tag.warn{color:var(--caution);border-color:var(--caution-line);cursor:help}
 .finds{display:flex;flex-wrap:wrap;gap:5px}
 .finds span{padding:3px 8px;background:var(--sunk);border:1px solid transparent;
  border-radius:3px;font-size:13px;color:var(--ink-2)}
@@ -262,8 +268,9 @@ It runs entirely in your browser &mdash; nothing you type is sent anywhere.</p>
 and not medical advice</b>. It ranks published case reports by how much their recorded
 findings overlap with yours. Records come from automated extraction with known error rates
 (phenotype F1 0.56), and findings a paper explicitly ruled out are mostly missing, so a
-finding not listed here never means it was excluded. Read the cited paper, and take
-anything useful to a clinician.</p>
+finding not listed here never means it was excluded. Papers describing several patients are
+read as one record, so about two in five carry findings that contradict each other &mdash;
+those are marked. Read the cited paper, and take anything useful to a clinician.</p>
 
 <div class=query>
  <label class=fld for=q>Findings or a gene &mdash; type a few letters, then choose</label>
@@ -337,6 +344,9 @@ function card(h){const c=h.c;
    ${h.shared.length?'<span>'+h.shared.length+'/'+c.p.length+' findings shared</span>'
      :'<span>'+c.p.length+' findings recorded</span>'}
    ${c.o?'<span class="tag new">not in any curated database</span>':''}
+   ${c.q?'<span class="tag warn" title="This record lists a finding as both present and'+
+     ' absent, usually because the paper describes several patients and extraction did not'+
+     ' separate them. Read the paper.">record self-contradictory</span>':''}
    ${c.r?'<span class="tag ret">retracted</span>':''}</div>
   ${h.shared.length?'<div class=finds>'+h.shared.map(([t,v])=>
     `<span class="${v>=3?'key':''}">${esc(D.labels[t])}</span>`).join('')+'</div>':''}
