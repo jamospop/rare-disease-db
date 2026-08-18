@@ -70,7 +70,7 @@ Every file, what it is, and how big. Generated - do not edit by hand:
 | `scripts/audit_goldset.py` | 57 | The licence/retraction audit -> goldset_availability.json. |
 | `scripts/build_corpus.py` | 165 | Extracts cases from never-curated open-access case reports. |
 | `scripts/build_release.py` | 200 | Versioned release: JSONL + phenopackets + datasheet + SHA256SUMS. |
-| `scripts/build_static_search.py` | 364 | Exports the corpus as one offline, self-contained search page. |
+| `scripts/build_static_search.py` | 398 | Exports the corpus as one offline, self-contained search page. |
 | `scripts/check_quotes.py` | 49 | Verifies every quote is verbatim; consults no gold data. |
 | `scripts/fetch_eval_fulltext.py` | 45 | Warms the full-text cache so scoring is offline. |
 | `scripts/gen_manifest.py` | 204 | Regenerates FILES.md from disk. |

@@ -108,7 +108,14 @@ def main() -> None:
         key=lambda r: -r["c"],
     )
 
-    data = {"labels": labels, "ic": ic, "anc": anc, "cases": cases, "terms": searchable}
+    genes: dict[str, list[int]] = {}
+    for i, c in enumerate(cases):
+        for g in c["g"]:
+            genes.setdefault(g.upper(), []).append(i)
+    print(f"  {len(genes)} distinct genes indexed")
+
+    data = {"labels": labels, "ic": ic, "anc": anc, "cases": cases,
+            "terms": searchable, "genes": genes}
     blob = json.dumps(data, separators=(",", ":"))
     print(f"  payload {len(blob)/1e6:.2f} MB raw, {len(gzip.compress(blob.encode()))/1e6:.2f} MB gzipped")
 
@@ -185,6 +192,9 @@ input:focus{outline:2px solid var(--accent);outline-offset:1px;background:var(--
  text-align:left;padding:9px 13px;border:0;background:none;color:var(--ink);
  font:inherit;cursor:pointer}
 .sugglist button:hover,.sugglist button:focus{background:var(--sunk);outline:none}
+.sugglist .kind{display:inline-block;min-width:34px;color:var(--accent);font-size:10.5px;
+ text-transform:uppercase;letter-spacing:.06em;margin-right:8px}
+.chip.gene{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
 .sugglist .n{color:var(--muted);font-size:12px;
  font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
 #chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
@@ -256,9 +266,9 @@ finding not listed here never means it was excluded. Read the cited paper, and t
 anything useful to a clinician.</p>
 
 <div class=query>
- <label class=fld for=q>Findings &mdash; type a few letters, then choose a term</label>
+ <label class=fld for=q>Findings or a gene &mdash; type a few letters, then choose</label>
  <div class=field>
-  <input id=q placeholder="seizure, microcephaly, hearing loss, short stature&hellip;"
+  <input id=q placeholder="seizure, microcephaly, hearing loss, KMT2B&hellip;"
    autocomplete=off role=combobox aria-expanded=false aria-controls=sugg>
   <div id=sugg></div>
  </div>
@@ -276,6 +286,7 @@ much more than a shared common one.</footer>
 const D=__DATA__;
 const A=D.anc.map(a=>new Set(a));
 const $=s=>document.querySelector(s), sel=new Map(), pairs=new Map();
+let gene=null;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 $('#stats').innerHTML=[
  ['Cases searchable',D.cases.length],
@@ -294,22 +305,59 @@ $('#q').onkeydown=e=>{if(e.key==='Escape'){$('#sugg').innerHTML='';
  $('#q').setAttribute('aria-expanded','false');}};
 function suggest(v){const s=v.trim().toLowerCase();
  if(s.length<2){$('#sugg').innerHTML='';$('#q').setAttribute('aria-expanded','false');return}
- const hits=D.terms.filter(x=>x.n.toLowerCase().includes(s)).slice(0,9);
- $('#q').setAttribute('aria-expanded',hits.length?'true':'false');
- $('#sugg').innerHTML=hits.length?'<div class=sugglist id=sugglist role=listbox>'+hits.map(x=>
-  `<button type=button role=option onclick="add(${x.i})">${esc(x.n)}`+
-  `<span class=n>${x.c}</span></button>`).join('')+'</div>':'';}
+ const hits=D.terms.filter(x=>x.n.toLowerCase().includes(s)).slice(0,8);
+ const gs=Object.keys(D.genes).filter(g=>g.toLowerCase().startsWith(s))
+   .sort((a,b)=>D.genes[b].length-D.genes[a].length).slice(0,4);
+ const rows=gs.map(g=>`<button type=button role=option onclick="addGene('${g}')">`+
+   `<span><span class=kind>gene</span>${esc(g)}</span>`+
+   `<span class=n>${D.genes[g].length}</span></button>`).join('')
+  +hits.map(x=>`<button type=button role=option onclick="add(${x.i})">${esc(x.n)}`+
+   `<span class=n>${x.c}</span></button>`).join('');
+ $('#q').setAttribute('aria-expanded',rows?'true':'false');
+ $('#sugg').innerHTML=rows?'<div class=sugglist id=sugglist role=listbox>'+rows+'</div>':'';}
+function addGene(g){gene=(gene===g?null:g);$('#q').value='';$('#sugg').innerHTML='';
+ $('#q').setAttribute('aria-expanded','false');draw();run();$('#q').focus();}
 function add(i){sel.set(i,D.labels[i]);$('#q').value='';$('#sugg').innerHTML='';
  $('#q').setAttribute('aria-expanded','false');draw();run();$('#q').focus();}
 function del(i){sel.delete(i);draw();run();}
-function draw(){$('#chips').innerHTML=[...sel].map(([i,l])=>
+function draw(){$('#chips').innerHTML=
+ (gene?`<span class="chip gene">gene ${esc(gene)}<button type=button onclick="addGene('${gene}')"`+
+   ` aria-label="Remove gene filter">&times;</button></span>`:'')+
+ [...sel].map(([i,l])=>
  `<span class=chip>${esc(l)}<button type=button onclick="del(${i})"`+
  ` aria-label="Remove ${esc(l)}">&times;</button></span>`).join('');}
 
+function card(h){const c=h.c;
+ const label=esc(c.t||('PMID '+c.m));
+ const link=c.m?`<a href="https://pubmed.ncbi.nlm.nih.gov/${esc(c.m)}/" target=_blank`+
+  ` rel=noopener>${label}</a>`:label;
+ return `<article class=case><h3>${link}</h3>
+  <div class=rec>${c.m?'<span>PMID '+esc(c.m)+'</span>':''}${c.y?'<span>'+esc(c.y)+'</span>':''}
+   ${c.l?'<span>'+esc(c.l)+'</span>':''}
+   ${h.shared.length?'<span>'+h.shared.length+'/'+c.p.length+' findings shared</span>'
+     :'<span>'+c.p.length+' findings recorded</span>'}
+   ${c.o?'<span class="tag new">not in any curated database</span>':''}
+   ${c.r?'<span class="tag ret">retracted</span>':''}</div>
+  ${h.shared.length?'<div class=finds>'+h.shared.map(([t,v])=>
+    `<span class="${v>=3?'key':''}">${esc(D.labels[t])}</span>`).join('')+'</div>':''}
+  ${c.d.length?`<p class=dxline>Reported diagnosis: <b>${esc(c.d.join(', '))}</b>`+
+    (c.g.length?' &middot; gene '+esc(c.g.join(', ')):'')+'</p>':''}
+  </article>`;}
+
 function run(){
- if(!sel.size){$('#out').innerHTML='';return}
+ if(!sel.size&&!gene){$('#out').innerHTML='';return}
+ const allow=gene?new Set(D.genes[gene]||[]):null;
+ if(!sel.size&&gene){  // gene-only lookup: list its cases, no ranking to do
+  const rows=[...allow].map(i=>({c:D.cases[i],score:0,shared:[]}));
+  $('#out').innerHTML='<h2>Published cases reporting '+esc(gene)+'</h2>'+
+   '<p class=note>All cases in this corpus with a variant recorded in this gene. '+
+   'Add findings above to rank them by how closely they match a patient.</p>'+
+   (rows.length?'<div class=cases>'+rows.map(card).join('')+'</div>'
+     :'<p class=empty>No case here reports this gene.</p>');
+  return;}
  const q=[...sel.keys()],hits=[];
- for(const c of D.cases){
+ for(const [ci,c] of D.cases.entries()){
+  if(allow&&!allow.has(ci))continue;
   if(!c.p.length)continue;
   let fwd=0;for(const x of q){let b=0;for(const t of c.p){const v=pairIC(x,t);if(v>b)b=v;}fwd+=b;}
   let rev=0;for(const t of c.p){let b=0;for(const x of q){const v=pairIC(t,x);if(v>b)b=v;}rev+=b;}
@@ -339,21 +387,7 @@ function run(){
  out+='<h2>Matching published cases</h2><p class=note>Highlighted findings are the rare, '+
   'informative ones &mdash; those are what carry the match. Open the paper before relying '+
   'on any of it.</p>';
- out+=top.length?'<div class=cases>'+top.map(h=>{const c=h.c;
-  const label=esc(c.t||('PMID '+c.m));
-  const link=c.m?`<a href="https://pubmed.ncbi.nlm.nih.gov/${esc(c.m)}/" target=_blank`+
-   ` rel=noopener>${label}</a>`:label;
-  return `<article class=case><h3>${link}</h3>
-   <div class=rec>${c.m?'<span>PMID '+esc(c.m)+'</span>':''}${c.y?'<span>'+esc(c.y)+'</span>':''}
-    ${c.l?'<span>'+esc(c.l)+'</span>':''}
-    <span>${h.shared.length}/${c.p.length} findings shared</span>
-    ${c.o?'<span class="tag new">not in any curated database</span>':''}
-    ${c.r?'<span class="tag ret">retracted</span>':''}</div>
-   <div class=finds>${h.shared.map(([t,v])=>
-     `<span class="${v>=3?'key':''}">${esc(D.labels[t])}</span>`).join('')}</div>
-   ${c.d.length?`<p class=dxline>Reported diagnosis: <b>${esc(c.d.join(', '))}</b>`+
-     (c.g.length?' &middot; gene '+esc(c.g.join(', ')):'')+'</p>':''}
-   </article>`}).join('')+'</div>'
+ out+=top.length?'<div class=cases>'+top.map(card).join('')+'</div>'
   :'<p class=empty>No published case here shares these findings. That may mean the '+
    'combination is genuinely unreported, or simply that extraction missed it.</p>';
  $('#out').innerHTML=out;}
