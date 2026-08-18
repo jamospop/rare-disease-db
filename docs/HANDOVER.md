@@ -233,6 +233,43 @@ Against the plan's targets: gene is within 0.024; phenotypes are −0.293; diagn
 
 ---
 
+## 3b. The corpus was circular; it no longer is
+
+Every record shipped before this point came from a paper already in phenopacket-store, i.e.
+already curated by experts. Useful for measuring extraction, worth **nothing** to anyone
+looking something up: the information was already structured somewhere.
+
+`scripts/build_corpus.py` targets the other ~442,000 open-access case reports in PMC and
+excludes every gold-set paper by construction, so its output is net-new. Two quality lessons
+from the first pass:
+
+- **The first query was too loose.** `"case reports"[pt]` in PMC still returned reviews,
+  editorials and, memorably, a paper on four new species of fungus. Those contain no
+  patients, so extracting "cases" from them manufactures records with no referent - the worst
+  possible failure for a corpus people search. Adding `NOT review[pt]` cut the candidate pool
+  from 19,850 to 3,019 and removed nearly all of it, with a title-based review filter as a
+  second line of defence.
+- **Titles were missing from releases.** `EvalPaper.source_doc()` carries identifiers and
+  licence, not bibliography, so every result row rendered without a title. Fine for a metric,
+  useless for a human deciding whether to open a paper.
+
+## 3c. What people can actually use
+
+`make search-page` builds `dist/case-search.html`: one self-contained file, no server, no
+install, no network at query time. Enter a patient's findings, get published cases whose
+recorded features overlap, weighted so a shared rare finding counts far more than a shared
+common one, each with a citation.
+
+This is the first artifact in the project that answers a person's question rather than a
+methodologist's. The scoring is the same symmetric best-match information content the server
+uses, precomputed to term indices, IC values and ancestor closures so the browser only does
+arithmetic. Published at
+https://claude.ai/code/artifact/e15b5657-7db4-4741-863f-7b25402e6b78
+
+Framing matters as much as the ranking here: absent findings are largely missing from
+extraction (F1 0.11), so the page states explicitly that a finding not listed was never
+"ruled out". Without that, silence reads as evidence.
+
 ## 4. Next actions, in priority order
 
 0. **A 7-paper pilot now exists** (BENCHMARKS §8) with 0% hallucination and graded F1 0.712

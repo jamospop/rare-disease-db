@@ -49,6 +49,25 @@ QA suite, diagnostic benchmark, release builder, read API + UI. 47 offline tests
 - Apache-2.0 `LICENSE` and `LICENSE-DATA`; personal email replaced with a placeholder and a
   warning; `FILES.md` + a self-checking manifest generator; em dashes removed from prose.
 
+### Added - things people can use
+
+- **Self-contained search page** (`make search-page`, published as an Artifact): enter a
+  patient's findings, get published cases whose recorded features overlap, what they turned
+  out to be, and a citation each. Runs entirely in the browser; nothing typed leaves it.
+- **Case-similarity search** (`rdcd/search/similar.py`, `/api/similar`): symmetric
+  best-match information content over the HPO DAG, so shared rare findings dominate shared
+  common ones. Returns the shared findings themselves, so a match can be interrogated.
+- **Net-new corpus pass** (`make corpus`): extracts from open-access case reports that no
+  structured resource covers, excluding every gold-set paper by construction. Until now every
+  record came from an already-curated paper and added nothing to the world.
+
+### Fixed
+
+- Corpus query was pulling in reviews, editorials and even fungal taxonomy papers - documents
+  with no patients, from which "extracting cases" manufactures records with no referent.
+  Tightened the query (19,850 -> 3,019 candidates) and added a title-based review filter.
+- Releases carried no title, journal or year, so every search result rendered untitled.
+
 ### Measured (pilot)
 
 - First LLM extraction, without an API key: document text written to disk, read by an

@@ -75,6 +75,13 @@ def main() -> None:
             if not doc.has_body:
                 continue
             src = p.source_doc()
+            # Enrich from the parsed document: EvalPaper carries identifiers and
+            # licence, not bibliography, and a result row without a title is much
+            # harder for a person to judge.
+            src = src.model_copy(update={
+                "title": doc.title, "journal": doc.journal,
+                "year": doc.year, "doi": doc.doi,
+            })
             notice = ri.check(pmid=p.pmid)
             if notice:
                 src = src.model_copy(update={"retracted": True,

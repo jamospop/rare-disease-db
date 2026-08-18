@@ -14,7 +14,8 @@ REPORTS := reports
 .DEFAULT_GOAL := help
 .PHONY: help install data data-ontologies data-goldsets audit fetch-fulltext \
         eval eval-ablations diagnostic diagnostic-abstract qa reproduce test lint \
-        llm-dev llm-dev-dry llm-dev-batch manual-prep manual-score \
+        llm-dev llm-dev-dry llm-dev-batch manual-prep manual-score corpus \
+        search-page \
         manifest check \
         clean clean-cache release api
 
@@ -95,6 +96,12 @@ llm-dev: audit  ## Run the LLM extractor on the dev split and score it (needs AP
 
 llm-dev-batch: audit  ## Same via the Batch API (~50% cheaper, up to 24h)
 	$(PY) -u scripts/run_llm_dev.py --batch
+
+search-page:  ## Build the self-contained offline search page into dist/
+	$(PY) -u scripts/build_static_search.py
+
+corpus:  ## Extract cases from never-curated open-access case reports (network)
+	$(PY) -u scripts/build_corpus.py --limit 4000
 
 manual-prep: audit  ## Write dev-split document text for extraction without an API key
 	$(PY) -u scripts/prepare_manual_extraction.py --limit 30

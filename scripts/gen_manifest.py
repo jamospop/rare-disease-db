@@ -68,6 +68,10 @@ DESC: dict[str, str] = {
     "scripts/prepare_manual_extraction.py": "Writes document text for extraction without an API key.",
     "scripts/score_manual_extraction.py": "Grounds + scores that extraction through the API code path.",
     "scripts/check_quotes.py": "Verifies every quote is verbatim; consults no gold data.",
+    "scripts/build_corpus.py": "Extracts cases from never-curated open-access case reports.",
+    "scripts/build_static_search.py": "Exports the corpus as one offline, self-contained search page.",
+    "rdcd/search/__init__.py": "Package marker.",
+    "rdcd/search/similar.py": "Phenotype similarity: find published cases resembling a patient.",
     "tests/conftest.py": "Skips ontology-dependent tests cleanly before `make data`.",
     "tests/test_schema.py": "Round-trip and provenance-or-null enforcement.",
     "tests/test_ontology.py": "OBO parsing, xref modifiers, negation, HP:0000118 restriction.",
@@ -96,7 +100,7 @@ RELEASE = {
     "SHA256SUMS": "Checksums for every file above.",
 }
 
-SKIP_DIRS = {"data", "work", ".git", "__pycache__", ".pytest_cache", "reports"}
+SKIP_DIRS = {"data", "work", "dist", ".git", "__pycache__", ".pytest_cache", "reports"}
 
 
 def line_count(p: Path) -> int | None:

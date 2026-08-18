@@ -10,12 +10,26 @@ phenopacket-store, RAMEDIS, ClinVar); what is missing is *coverage* - a machine-
 corpus spanning the whole published literature, where every field points back at the
 sentence it came from.
 
-**Status: month-1 foundation.** The eval harness, schema, ontology layer, QA suite,
+**Status: month-1 foundation, plus a usable search tool.** The eval harness, schema, ontology layer, QA suite,
 diagnostic benchmark, and a no-API-key baseline extractor are built and measured. The
 corpus-scale extraction pass has not been run. Every number below was produced by
 `make reproduce` on this repository and can be regenerated from public sources.
 
 ---
+
+## Use it
+
+**[Search published cases by a patient's findings](https://claude.ai/code/artifact/e15b5657-7db4-4741-863f-7b25402e6b78)**
+- one self-contained page, no install, no server, nothing you type leaves the browser.
+Enter clinical findings, get published case reports whose recorded features overlap, what
+those cases turned out to be, and a citation for every one. Rare findings are weighted far
+above common ones, so a shared unusual feature counts for much more than a shared common one.
+
+Research tool, not a diagnostic device and not medical advice. Error rates are on the page
+and in [ERROR_LEDGER](docs/ERROR_LEDGER.md); findings a paper explicitly ruled out are mostly
+missing, so "not listed" never means "ruled out".
+
+Rebuild it yourself: `make search-page` writes `dist/case-search.html`.
 
 ## What is actually here
 
@@ -28,7 +42,9 @@ corpus-scale extraction pass has not been run. Every number below was produced b
 | LLM extractor (`rdcd/extract/llm.py`) | Written, **not executed live**: see Limitations |
 | QA: provenance verification, ontology constraints, consensus, retractions (`rdcd/qa/`) | Working |
 | Phenotype-driven diagnostic ranker + ceiling/pipeline benchmark (`rdcd/eval/diagnose.py`) | Working |
-| Corpus-scale extraction pass, public API, dataset release | Not built |
+| Net-new corpus pass over never-curated papers (`scripts/build_corpus.py`) | Working |
+| Case-similarity search + self-contained search page | Working |
+| Full corpus-scale run (442k open-access case reports) | Not built |
 
 ## Headline numbers
 
